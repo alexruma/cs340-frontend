@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./styles/main.css">
     <script src="./scripts/main.js"></script>
     <title>Record Store</title>
 </head>
@@ -13,7 +14,7 @@
         <!-- HEADER WITH NAVIGATION -->
         <nav class="navbar" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
-                <div class="navbar-item">+Records</div>
+                <a href="index.html" class="navbar-item">+Records</a>
 
                 <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="hamburger">
                     <span aria-hidden="true"></span>
@@ -24,9 +25,9 @@
 
             <div id="hamburger" class="navbar-menu">
                 <div class="navbar-end">
-                    <a class="navbar-item">About</a>
-                    <a class="navbar-item">My Account</a>
-                    <a class="navbar-item">My Cart</a>
+                    <a href="about.html" class="navbar-item">About</a>
+                    <a href="account-template.html" class="navbar-item">My Account</a>
+                    <a href="cart-template.html" class="navbar-item">My Cart</a>
                 </div>
             </div>
         </nav>
@@ -68,16 +69,19 @@
             <div class="column is-four-fifths">
                 <h1>Albums</h1>
                 <!-- albums -->
-                <div class="albums">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
+                <div class="columns is-flex-wrap-wrap albums">
+                    <div class="column is-one-fifth"></div>
+                    <div class="column is-one-fifth"></div>
+                    <div class="column is-one-fifth"></div>
+                    <div class="column is-one-fifth"></div>
+                    <div class="column is-one-fifth"></div>
+                    <div class="column is-one-fifth"></div>
+                    <div class="column is-one-fifth"></div>
+                    <div class="column is-one-fifth"></div>
+                    <div class="column is-one-fifth"></div>
+                    <div class="column is-one-fifth"></div>
+                    <div class="column is-one-fifth"></div>
+                    <div class="column is-one-fifth"></div>
                 </div>
                 <!--pagination-->
                 <ul style="display: flex; flex-direction: row;">
@@ -86,6 +90,7 @@
                     <li><a>3</a></li>
                     <li><a>4</a></li>
                     <li><a>5</a></li>
+                    <li><a>&rarr; next</a></li>
                 </ul>
             </div>
         </section>
