@@ -1,0 +1,20 @@
+.remove{
+    border: solid gray;
+    border-radius: 3%;
+
+}
+
+.remove:hover{
+    color: orange;
+    text-decoration: underline;
+}
+
+.cart-item{
+    color: green
+}
+
+.cart-item:hover{
+    color: orange;
+    text-decoration: underline;
+}
+
