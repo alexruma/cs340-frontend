@@ -4,43 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css">
     <link rel="stylesheet" href="./styles/main.css">
     <script src="./scripts/main.js"></script>
     <title>My Account</title>
 </head>
 <body>
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a href="index.html" class="navbar-item">+Records</a>
-
-            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="hamburger">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>  
-        </div>
-
-        <div id="hamburger" class="navbar-menu">
-            <div class="navbar-end">
-                <a href="about.html" class="navbar-item">About</a>
-                <a href="account-template.html" class="navbar-item">My Account</a>
-                <a href="cart-template.html" class="navbar-item">My Cart</a>
-            </div>
-        </div>
-    </nav>
     <div class="container is-size-4">
-        <section>
-            <h1 class="has-text-center is-size-1">My Account</h1>
-            <h2>My Info</h2>
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a href="index.html" class="navbar-item">+Records</a>
+
+                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="hamburger">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>  
+            </div>
+
+            <div id="hamburger" class="navbar-menu">
+                <div class="navbar-end">
+                    <a href="about.html" class="navbar-item">About</a>
+                    <a href="account-template.html" class="navbar-item">My Account</a>
+                    <a href="cart-template.html" class="navbar-item">My Cart</a>
+                </div>
+            </div>
+        </nav>
+    
+        <section class="mb-6 p-4 box">
+            <h1 class="has-text-center is-size-1 mb-4">My Account</h1>
+        </section>
+        <section class="mb-6 box">
+            <h2 class="is-underlined">My Info</h2>
             <ul>
-                <li>First Name: Test</li>
-                <li>Last Name: User</li>
-                <li>Email: Test.User@plusrecords.com</li>
-                <li>Favorite Genre: Alternative Rock</li>
+                <li><span class="has-text-weight-bold">First Name:</span> Test</li>
+                <li><span class="has-text-weight-bold">Last Name:</span> User</li>
+                <li><span class="has-text-weight-bold">Email:</span> Test.User@plusrecords.com</li>
+                <li><span class="has-text-weight-bold">Favorite Genre:</span> Alternative Rock</li>
             </ul>
+
+        </section>
+        <section class="box">
             <h2>Past Orders</h2>
-            <table>
+            <table class="table is-hoverable">
                 <thead>
                     <tr>
                         <th>Order Number</th>
@@ -61,6 +66,9 @@
                     </tr>
                 </tbody>
             </table>
+        </section>
+        <section>
+            <a href="edit-account-template.html" class="button has-background-primary is-pulled-right">Edit Account</a>
         </section>
     </div>
     <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
