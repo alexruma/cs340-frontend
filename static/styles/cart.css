@@ -1,7 +1,10 @@
+
+.main-div{
+    position: absolute;
+    left: 1%;
+    margin-top: 5%;
+}
 .remove-button{
-    border: solid gray;
-    border-radius: 9%;
-    margin: 2%;
 
 }
 #headline{
@@ -32,18 +35,11 @@ margin: 2%;
 font-size: 20px;
 }
 
-#buy-div{
- 
-}
+.buy-btn{
+    margin-top:4.5%;
 
-#buy-btn{
-    border: solid gray;
-    border-radius: 18%;
-    background-color: White;
-    padding: .5%;
-    font-size: 22px;
 }
-#buy-btn:hover{
+.buy-btn:hover{
     color: rgb(9, 119, 42);
     background-color: honeydew;
     text-decoration: underline;

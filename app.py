@@ -19,3 +19,10 @@ def render_cart():
 def render_account():
     return render_template('account-template.html')
 
+@app.route('/album-template.html')
+def render_album():
+    return render_template('album-template.html')
+   
+@app.route('/admin.html')
+def render_admin():
+    return render_template('admin.html')
