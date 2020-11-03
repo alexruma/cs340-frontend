@@ -1,0 +1,46 @@
+
+.main-div{
+    position: absolute;
+    left: 1%;
+    margin-top: 5%;
+}
+.remove-button{
+
+}
+#headline{
+    margin: 3%
+}
+
+li{
+    font-size: 16px;
+}
+
+.remove-button:hover{
+    color: orange;
+    text-decoration: underline;
+}
+
+.cart-item{
+    color:black;
+    margin: 2%;
+}
+
+.cart-item:hover{
+    color: teal;
+    text-decoration: underline;
+}
+
+#cart-total{
+margin: 2%;
+font-size: 20px;
+}
+
+.buy-btn{
+    margin-top:4.5%;
+
+}
+.buy-btn:hover{
+    color: rgb(9, 119, 42);
+    background-color: honeydew;
+    text-decoration: underline;
+}
