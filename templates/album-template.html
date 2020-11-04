@@ -1,61 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles/main.css">
-    <link rel="stylesheet" href="./styles/album.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/album.css')}}">
-    <title>Album Name</title>
-</head>
-<body>
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a href="/" class="navbar-item">+Records</a>
-
-            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="hamburger">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>  
+{% extends "layout/layout_template.html" %}
+{% block title %}Album Name{% endblock %}
+{% block content %}
+    <div class = "details-main-div columns">
+        <div class="is-one-half">
+            <h1 class="is-size-1" id="album-header">Album Details</h1>
+            <h2 ><span class="has-text-weight-bold">Album: </span> positions</h2>
+            <h3 ><span class="has-text-weight-bold">Artist: </span> Ariana Grande</h3>
+            <h4 ><span class="has-text-weight-bold">Genre: </span>Pop</h4>
         </div>
-
-        <div id="hamburger" class="navbar-menu">
-            <div class="navbar-end">
-                <a href="about.html" class="navbar-item">About</a>
-                <a href="account-template.html" class="navbar-item">My Account</a>
-                <a href="cart-template.html" class="navbar-item">My Cart</a>
-            </div>
+        <div class="is-one-half ml-5">
+            <img src={{ url_for("static", filename="images/album1.png")}} />
         </div>
-    </nav>
-    <!-- Header/navbar section end-->
-
-    <div class = "details-main-div">
-    <h1 id="album-header">Album Details</h1>
-    <div class="columns">
-        <div id="details-div" class="column is-one-eigth">
-        <div id="album_name" class ="album_detail_item ">positions</div>
-        <div id = "artist_name" class="album_detail_item">Ariana Grande</div>
-        <div id = "genre" class="album_detail_item">Pop</div>
-        </div>
-        
-        
     </div>
     <div>
-        <h1>Tracks</h1>
-        <table>
-            <ol>
-                <li> Track One</li>
-                <li> Track Two</li>
-                <li> Track Three</li>
-            </ol>
+        <h1 class="is-size-1">Tracks</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Track Number</th>
+                    <th>Song</th>
+                    <th>Length</th>
+                    <th>Popularity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Song 1</td>
+                    <td>3:12</td>
+                    <td>&starf; &starf; &starf; &starf;</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Song 2</td>
+                    <td>2:31</td>
+                    <td>&starf; &starf; &starf; </td>
+                </tr>
+            </tbody>
         </table>
     </div>
     <div id = "album-price" class="album_detail_item">$12.99</div>
-    <button class="button cart-btn">Add to Cart</button> 
+    <button class="button is-primary cart-btn mt-3">Add to Cart</button> 
 </div>
-</body>
-</html>
+{% endblock %}

@@ -1,40 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css">
-    <link rel="stylesheet" href="./styles/main.css">
-    <script src="./scripts/main.js"></script>
-    <title>About</title>
-</head>
-<body>
-    <div class="container is-size-4">
-        <nav class="navbar" role="navigation" aria-label="main navigation">
-            <div class="navbar-brand">
-                <a href="/" class="navbar-item">+Records</a>
-    
-                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="hamburger">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </a>  
-            </div>
-    
-            <div id="hamburger" class="navbar-menu">
-                <div class="navbar-end">
-                    <a href="about.html" class="navbar-item">About</a>
-                    <a href="account-template.html" class="navbar-item">My Account</a>
-                    <a href="cart-template.html" class="navbar-item">My Cart</a>
-                </div>
-            </div>
-        </nav>
+{% extends "layout/layout_template.html" %}
+{% block title %}About{% endblock %}
+{% block content %}
         <section class="content">
             <h1 class="is-size-1 mb-4">About our store</h1>
             <div class="columns">
                 <div class="column is-half">
-                    <img src="./assetts/recordstore.jpg" alt="what our store looks like inside">
+                    <img src={{ url_for("static", filename="images/recordstore.jpg")}} alt="what our store looks like inside">
                 </div>
                 <div class="column is-half">
                     <p>
@@ -65,6 +36,4 @@
             </div>
             <a class="button is-primary" href="mailto:support@plusrecords.com">Email Us!</a>
         </section>
-    </div>
-</body>
-</html>
+{% endblock %}
