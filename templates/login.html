@@ -1,0 +1,26 @@
+{% extends "layout/layout_template.html" %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<div class="columns is-centered mt-6">
+    <form class="column is-half" method="POST" action="login">
+        <div class="field">
+            <label for="user" class="label">User: </label>
+            <div class="control">
+                <input type="text" class="input" placeholder="username" name="user" required>
+            </div>
+        </div>
+        <div class="field">
+            <label for="password" class="label">Password: </label>
+            <div class="control">
+                <input type="password" class="input" placeholder="password" name="password">
+            </div>
+        </div>
+        <div class="field">
+            <button class="button is-primary">Login</button>
+            <p>works with any input for now</p>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,4 +1,7 @@
 {% extends "layout/layout_template.html" %}
+{% block styles %}
+<link rel="stylesheet" href={{ url_for("static", filename="styles/cart.css") }} />
+{% endblock %}
 {% block title %}My Cart{% endblock %}
 {% block content %}
        <div class="main-div">

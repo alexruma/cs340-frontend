@@ -1,0 +1,41 @@
+{% extends "layout/layout_template.html" %}
+{% block title %}Edit Account{% endblock %}
+
+{% block content %}
+<section class="mb-4">
+    <h1 class="is-size-1">Edit Account</h1>
+</section>
+<section class="columns">
+    <form class="form column is-two-thirds" >
+        <div class="field">
+            <label for="first_name" class="label">First Name: </label>
+            <div class="control">
+                <input type="text" class="input" placeholder="First Name">
+            </div>
+        </div>
+        <div class="field">
+            <label for="last_name" class="label">Last Name: </label>
+            <div class="control">
+                <input type="text" class="input" placeholder="Last Name">
+            </div>
+        </div>
+        <div class="field">
+            <label for="email" class="label">Email: </label>
+            <div class="control">
+                <input type="email" class="input" placeholder="email">
+            </div>
+        </div>
+        <div class="field">
+            <label for="fav_genre" class="label">Favorite Genre</label>
+            <select name="fav_genre" id="fav_genre" class="select">
+                <option value="rock" selected>Rock</option>
+                <option value="hip_hop">Hip Hop</option>
+                <option value="classical">Classical</option>
+            </select>
+        </div>
+        <div>
+            <button class="button is-link">Update!</button>
+        </div>
+    </form>
+</section>
+{% endblock %}

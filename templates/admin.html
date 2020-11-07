@@ -1,32 +1,142 @@
 {% extends "layout/layout_template.html" %}
 {% block title %}Admin{% endblock %}
 {% block content %}
-   <div>
-        <h1>Add Album To Library </h1>
-        <!-- add album form-->
-        <form method="POST">
-            <label for="album-name">Album name:</label><br>
-            <input type="text" id="album-name" name="album-name"><br>
-            
-            <label for="artist-name">Artist name:</label><br>
-            <input type="text" id="artist-name" name="artist-name"><br>
-            
-            <label for="price">Price:</label><br>
-            <input type="number" id="price" name="price"><br>
-            
-            <label for="genre">Genre:</label><br>
-            <input type="text" id="genre" name="genre"><br>
-            <br>
-            <input type ="submit">
-        </form>
-   </div>
-   <div>
-       <h1>Delete Album</h1>
-       <!-- search by album name? -->
-       <form method="POST">
-        <label for="album-name">Album name:</label><br>
-        <input type="text" id="album-name" name="album-name"><br>
-        <input type ="submit">
-    </form>
-   </div>
+<nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="add" class={{ "active" if view == "add" or "" else ""}}>Add Album</a></li>
+      <li><a href="edit" class={{ "active" if view == "edit" else "" }}>Edit Album</a></li>
+      <li><a href="delete" class={{ "active" if view == "delete" else ""}}>Delete Album</a></li>
+      <li><a href="orders" class={{ "active" if view == "orders" else ""}}>Manage Orders</a></li>
+    </ul>
+  </nav>
+   <section class="mb-4 columns is-centered">
+        <div class="column is-half {{ "is-hidden" if view != "add" or view == "" else "" }}">
+            <h1 class="is-size-3">Add Album To Library </h1>
+            <!-- add album form-->
+            <form method="POST">
+                <div class="field">
+                    <label class="label" for="album-name">Album name:</label>
+                    <div class="control">
+                        <input class="input" type="text" id="album-name" name="album-name">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="artist-name">Artist name:</label>
+                    <div class="control">
+                        <input class="input" type="text" id="artist-name" name="artist-name">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="price">Price:</label>
+                    <div class="control">
+                        <input class="input" type="number" id="price" name="price">
+                    </div>
+                </div>            
+                <!-- select genre, use genre table to get id so that the value of the option is the id of the genre-->
+                <div class="field">
+                    <label class="genre" for="genre">Genre:</label>
+                    <div class="control">
+                        <select class="select" name="genre">
+                            <option value="1">Rock</option>
+                            <option value="2">Rap</option>
+                            <option value="3">Classical</option>
+                            <option value="4">Hip-Hop</option>
+                            <option value="5">Country</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="button is-primary">Add Album</button>
+            </form>
+        </div>
+        <div class="column is-one-half {{ "is-hidden" if view != "edit" else "" }}">
+            <h1 class="is-size-3">Update Album</h1>
+            <!-- search by album name? -->
+            <form class="flex flex-row">
+                 <div class="field">
+                     <label class="label" for="album-name">Album name:</label>
+                     <input class="input" type="text" id="album-name" name="album-name"><br>
+                 </div>
+                <button class="button is-link">Search</button>
+            </form>
+            <form>
+                <div class="field">
+                    <label class="label" for="album-name">Album name:</label>
+                    <div class="control">
+                        <input class="input" type="text" id="album-name" name="album-name">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="artist-name">Artist name:</label>
+                    <div class="control">
+                        <input class="input" type="text" id="artist-name" name="artist-name">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="price">Price:</label>
+                    <div class="control">
+                        <input class="input" type="number" id="price" name="price">
+                    </div>
+                </div>            
+                <!-- select genre, use genre table to get id so that the value of the option is the id of the genre-->
+                <div class="field">
+                    <label class="genre" for="genre">Genre:</label>
+                    <div class="control">
+                        <select class="select" name="genre">
+                            <option value="1">Rock</option>
+                            <option value="2">Rap</option>
+                            <option value="3">Classical</option>
+                            <option value="4">Hip-Hop</option>
+                            <option value="5">Country</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="button is-primary">Update Album</button>
+            </form>
+        </div>
+        <div class="column is-half is-centered {{ "is-hidden" if view != "delete" else ""}}">
+            <h1 class="is-size-3">Delete Album</h1>
+            <!-- search and delete by album name? -->
+            <form class="flex flex-row">
+                <div class="field">
+                    <label class="label" for="album-name">Album name:</label>
+                    <input class="input" type="text" id="album-name" name="album-name"><br>
+                </div>
+                <button class="button is-link">Delete</button>
+            </form>
+        </div>
+        <div class="column is-half is-centered {{ "is-hidden" if view != "orders" else ""}}">
+            <h1 class="is-size-3">Update Order</h1>
+            <!-- search and delete by album name? -->
+            <form class="flex flex-row">
+                <div class="field">
+                    <label class="label" for="customer">Customer:</label>
+                    <div class="control">
+                        <input class="input" type="text" id="customer" name="customer">
+                    </div>
+                </div>
+                <button class="button is-link">Find Customer</button>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Order Id</th>
+                        <th>Customer</th>
+                        <th>Total Price</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>243</td>
+                        <td>Corey</td>
+                        <td>25.99</td>
+                        <td><button class="button is-warning">Edit</button></td>
+                        <td><button class="button is-danger">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+   
 {% endblock %}
