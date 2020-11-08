@@ -1,12 +1,15 @@
 import os
 
 from flask import Flask, render_template, request, session, redirect
+import requests 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    response = requests.get("https://itunes.apple.com/search?media=music&entity=album&limit=15&term=rap")
+    response = response.json()
+    return render_template('index.html', context={ "albums": response["results"] })
 
 @app.route('/about')
 def render_about():

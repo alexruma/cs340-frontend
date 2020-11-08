@@ -3,7 +3,7 @@
 {% block content %}
         <!-- NEW RELEASES  -->
         <section class="section">
-            <h1 class="is-size-1">New Releases</h1>
+            <h1 class="is-size-1 mb-4">New Releases</h1>
             <div class="columns">
                 <div>
                 <a href="album/1" >
@@ -55,18 +55,13 @@
                 </form>
                 <!-- albums -->
                 <div class="columns is-flex-wrap-wrap albums">
-                    <div class="column is-one-fifth"></div>
-                    <div class="column is-one-fifth"></div>
-                    <div class="column is-one-fifth"></div>
-                    <div class="column is-one-fifth"></div>
-                    <div class="column is-one-fifth"></div>
-                    <div class="column is-one-fifth"></div>
-                    <div class="column is-one-fifth"></div>
-                    <div class="column is-one-fifth"></div>
-                    <div class="column is-one-fifth"></div>
-                    <div class="column is-one-fifth"></div>
-                    <div class="column is-one-fifth"></div>
-                    <div class="column is-one-fifth"></div>
+                    {% for album in context["albums"] %}
+                        <div style="height: 250px" class="column is-one-fifth box has-text-centered is-vcentered">
+                            <img class="mt-6" src={{ album["artworkUrl100"]}} alt="album artwork for {{ album["collectionName"]}}"/>
+                            <p>{{ album["artistName"]}}</p>
+                           
+                        </div>
+                    {% endfor %}
                 </div>
                 <!--pagination-->
                 <ul style="display: flex; flex-direction: row;">
