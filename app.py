@@ -38,8 +38,10 @@ def render_admin():
 def render_admin_add(view):
     if "admin" not in session or not session["admin"]:
         return render_template("index.html")
+
     if view not in ["add", "edit", "delete", "orders"]:
         view = "add"
+    
     return render_template('admin.html', view=view)
 
 @app.route("/login", methods=["GET", "POST"])
@@ -49,3 +51,9 @@ def login():
     else:
         session["admin"] = True 
         return render_template("admin.html")
+
+@app.route("/logout")
+def logout():
+    if "admin" in session:
+        del session["admin"]
+    return redirect("/")

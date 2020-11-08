@@ -1,0 +1,35 @@
+ <div class="columns is-centered">
+    <div class="column is-half">
+        <h1 class="is-size-3">Update Order</h1>
+    <!-- search and delete by album name? -->
+    <form class="flex flex-row">
+        <div class="field">
+            <label class="label" for="customer">Customer:</label>
+            <div class="control">
+                <input class="input" type="text" id="customer" name="customer">
+            </div>
+        </div>
+        <button class="button is-link">Find Customer</button>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Order Id</th>
+                <th>Customer</th>
+                <th>Total Price</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>243</td>
+                <td>Corey</td>
+                <td>25.99</td>
+                <td><button class="button is-warning">Edit</button></td>
+                <td><button class="button is-danger">Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
