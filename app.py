@@ -50,7 +50,7 @@ def login():
         return render_template("login.html")
     else:
         session["admin"] = True 
-        return render_template("admin.html")
+        return redirect("/admin/add")
 
 @app.route("/logout")
 def logout():
