@@ -1,90 +1,118 @@
 <div class="columns">
-           <section class="column is-half">
-             <h1 class="is-size-3">Update Album</h1>
-            <!-- search by album name? -->
-            <form class="flex flex-row">
-                 <div class="field">
-                     <label class="label" for="album-name">Album name:</label>
-                     <input class="input" type="text" id="album-name" name="album-name"><br>
-                 </div>
-                <button class="button is-link">Search</button>
-            </form>
-            <form>
+    <section class="column is-half">
+        <h1 class="is-size-3">Update Album</h1>
+        <!-- search by album name? -->
+        <form class="flex flex-row">
                 <div class="field">
                     <label class="label" for="album-name">Album name:</label>
-                    <div class="control">
-                        <input class="input" type="text" id="album-name" name="album-name">
-                    </div>
+                    <input class="input" type="text" id="album-name" name="album-name"><br>
                 </div>
-                <div class="field">
-                    <label class="label" for="artist-name">Artist name:</label>
-                    <div class="control">
-                        <input class="input" type="text" id="artist-name" name="artist-name">
-                    </div>
+            <button class="button is-link">Search</button>
+        </form>
+        <form>
+            <div class="field">
+                <label class="label" for="album-name">Album name:</label>
+                <div class="control">
+                    <input class="input" type="text" id="album-name" name="album-name">
                 </div>
-                <div class="field">
-                    <label class="label" for="price">Price:</label>
-                    <div class="control">
-                        <input class="input" type="number" id="price" name="price">
-                    </div>
-                </div>            
-                <!-- select genre, use genre table to get id so that the value of the option is the id of the genre-->
-                <div class="field">
-                    <label class="genre" for="genre">Genre:</label>
-                    <div class="control">
-                        <select class="select" name="genre">
-                            <option value="1">Rock</option>
-                            <option value="2">Rap</option>
-                            <option value="3">Classical</option>
-                            <option value="4">Hip-Hop</option>
-                            <option value="5">Country</option>
-                        </select>
-                    </div>
+            </div>
+            <div class="field">
+                <label class="label" for="artist-name">Artist name:</label>
+                <div class="control">
+                    <input class="input" type="text" id="artist-name" name="artist-name">
                 </div>
-                <button class="button is-primary">Update Album</button>
-            </form>
-           </section>
-            <section class="column is-half mt-4">
-                <h1>Update Genre</h1>
-                <form>
-                    <div class="field">
-                        <label class="label">Old Genre Name</label>
-                        <div class="control">
-                            <input type="text" name="old_genre" class="input" required />
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">New Genre Name</label>
-                        <div class="control">
-                            <input type="text" name="new_genre" class="input" required />
-                        </div>
-                    </div>
-                    <button class="button is-primary">Update Genre</button>
-                </form>
-                <h1 class="is-size-3">Update Artist</h1>
-                <form class="mb-3">
-                    <label class="label">Search Artist</label>
-                    <input type="text" class="input mb-2" name="artist" placeholder="search"/>
-                    <button class="button is-link">Search</button>
-                </form>
-                <form>
-                    <div class="field">
-                        <label class="label" for="artist_name">Name: </label>
-                        <div class="control">
-                            <input class="input" type="text" name="artist_name" placeholder="artist name" />
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">Genre</label>
-                        <div class="select">
-                            <select>
-                                <option value="1">Rock</option>
-                                <option value="2">Rap</option>
-                                <option value="3">Classical</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button class="button is-primary">Update Artist</button>
-                </form>
-            </section>
-        </div>
+            </div>
+            <div class="field">
+                <label class="label" for="price">Price:</label>
+                <div class="control">
+                    <input class="input" type="number" id="price" name="price">
+                </div>
+            </div>            
+            <!-- select genre, use genre table to get id so that the value of the option is the id of the genre-->
+            <div class="field">
+                <label class="genre" for="genre">Genre:</label>
+                <div class="control">
+                    <select class="select" name="genre">
+                        <option value="1">Rock</option>
+                        <option value="2">Rap</option>
+                        <option value="3">Classical</option>
+                        <option value="4">Hip-Hop</option>
+                        <option value="5">Country</option>
+                    </select>
+                </div>
+            </div>
+            <button class="button is-primary">Update Album</button>
+        </form>
+    </section>
+    <section class="column is-half mt-4">
+        <h1>Update Genre</h1>
+        <form>
+            <div class="field">
+                <label class="label">Old Genre Name</label>
+                <div class="control">
+                    <input type="text" name="old_genre" class="input" required />
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">New Genre Name</label>
+                <div class="control">
+                    <input type="text" name="new_genre" class="input" required />
+                </div>
+            </div>
+            <button class="button is-primary">Update Genre</button>
+        </form>
+    </section>
+</div>
+<div class="columns">
+    <section class="column is-half">
+        <h1 class="is-size-3">Update Artist</h1>
+        <form class="mb-3">
+            <label class="label">Search Artist</label>
+            <input type="text" class="input mb-2" name="artist" placeholder="search"/>
+            <button class="button is-link">Search</button>
+        </form>
+        <form>
+            <div class="field">
+                <label class="label" for="artist_name">Name: </label>
+                <div class="control">
+                    <input class="input" type="text" name="artist_name" placeholder="artist name" />
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Genre</label>
+                <div class="select">
+                    <select>
+                        <option value="1">Rock</option>
+                        <option value="2">Rap</option>
+                        <option value="3">Classical</option>
+                    </select>
+                </div>
+            </div>
+            <button class="button is-primary">Update Artist</button>
+        </form>
+    </section>
+    <section class="column is-half mt-4">
+        <h1 class="is-size-3">Add Track</h1>
+        <form>
+            <div class="field">
+                <label class="label" for="track-name">Track</label>
+                <div class="control">
+                    <input class="input" type="text" name="track-name" placeholder="track name" />
+                </div>
+            </div>
+            <div class="field">
+                <label class="label" for="track-length">Length</label>
+                <div class="control">
+                    <input class="input" type="number" name="track-length" placeholder="track length" />
+                </div>
+            </div>
+            <div class="field">
+                <label class="label" for="track-name">Album Name</label>
+                <div class="control">
+                    <input class="input" type="text" name="album-name" placeholder="album name" />
+                </div>
+            </div>
+            <button class="button is-primary">Add Track</button>
+        </form>
+    </section>
+</div>

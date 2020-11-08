@@ -44,16 +44,25 @@ def render_admin_add(view):
     
     return render_template('admin.html', view=view)
 
+@app.route("/create-account")
+def render_create_account():
+    return render_template("create-account.html")
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
         return render_template("login.html")
     else:
-        session["admin"] = True 
+        session["logged_in"] = True 
+        print(request.form["user"])
+        if request.form["user"] == "admin":
+            session["admin"] = True 
         return redirect("/admin/add")
 
 @app.route("/logout")
 def logout():
+    if "logged_in" in session:
+        del session["logged_in"]
     if "admin" in session:
         del session["admin"]
     return redirect("/")
