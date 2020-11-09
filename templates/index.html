@@ -55,13 +55,15 @@
                 </form>
                 <!-- albums -->
                 <div class="columns is-flex-wrap-wrap albums">
-                    {% for album in context["albums"] %}
-                        <div style="height: 250px" class="column is-one-fifth box has-text-centered is-vcentered">
-                            <img class="mt-6" src={{ album["artworkUrl100"]}} alt="album artwork for {{ album["collectionName"]}}"/>
-                            <p>{{ album["artistName"]}}</p>
-                           
-                        </div>
-                    {% endfor %}
+                    {% if context %}
+                        {% for album in context["albums"] %}
+                            <div style="height: 250px" class="column is-one-fifth box has-text-centered is-vcentered">
+                                <img class="mt-6" src={{ album["artworkUrl100"]}} alt="album artwork for {{ album["collectionName"]}}"/>
+                                <p>{{ album["artistName"]}}</p>
+                            
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
                 <!--pagination-->
                 <ul style="display: flex; flex-direction: row;">

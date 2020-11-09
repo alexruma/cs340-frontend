@@ -60,7 +60,8 @@ def login():
         print(request.form["user"])
         if request.form["user"] == "admin":
             session["admin"] = True 
-        return redirect("/admin/add")
+            return redirect("/admin/add")
+        return redirect("/")
 
 @app.route("/logout")
 def logout():
