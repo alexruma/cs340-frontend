@@ -2,14 +2,27 @@ import os
 
 from flask import Flask, render_template, request, session, redirect
 import requests 
+from db.connection import connect, execute_query
+
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 @app.route('/')
 def index():
+    """
+    displays homepage 
+    """
+
+    # get a bunch of albums from itunes 
     response = requests.get("https://itunes.apple.com/search?media=music&entity=album&limit=15&term=rap")
     response = response.json()
-    return render_template('index.html', context={ "albums": response["results"] })
+
+    # get list of genres for sidebar menu 
+    query = "SELECT GenreName, GenreID FROM Genres"
+    connection = connect() 
+    genres = execute_query(connection, query)
+
+    return render_template('index.html', context={ "albums": response["results"], "genres": genres })
 
 @app.route('/about')
 def render_about():

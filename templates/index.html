@@ -30,13 +30,10 @@
             <div class="column is-one-fifth">
                 <h1>Genre</h1>
                 <ul class="is-size-5">
-                    <li><a>Pop</a></li>
-                    <li><a>Rock</a></li>
-                    <li><a>Hip Hop</a></li>
-                    <li><a>Country</a></li>
-                    <li><a>Indie</a></li>
-                    <li><a>Reggaetón</a></li>
-                    <li><a>Classical</a></li>
+                    <!-- need to use javascript here to update the displayed albums -->
+                    {% for genre in context["genres"] %}
+                        <li><a data-id="{{genre[1]}}">{{ genre[0] }}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
             <div class="column is-four-fifths">
