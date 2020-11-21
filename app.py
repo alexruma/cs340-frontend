@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template, request, session, redirect
+from flask import Flask, render_template, request, session, redirect, jsonify
 import requests 
 from db.connection import connect, execute_query
 
@@ -99,3 +99,24 @@ def logout():
     if "admin" in session:
         del session["admin"]
     return redirect("/")
+
+
+# API CALLS 
+@app.route("/api/albumsByGenre", methods=["POST"])
+def getAlbums():
+    data = request.get_json()
+    genreID = data["id"]
+
+    connection = connect()
+    albums_query = f"""Select Albums.AlbumID, Albums.AlbumName, Artists.ArtistName, 
+                Artists.ArtistID, Genres.GenreName FROM Genres
+                INNER JOIN Album_Genres ON Genres.GenreID = Album_Genres.GenreID
+                INNER JOIN Albums ON Album_Genres.AlbumID = Albums.AlbumID
+                INNER JOIN Album_Artists ON Albums.AlbumID = Album_Artists.AlbumID
+                INNER JOIN Artists ON Album_Artists.ArtistID = Artists.ArtistID
+                WHERE Genres.GenreID = {genreID}"""
+    albums = execute_query(connection, albums_query)
+ 
+    connection.close()
+
+    return jsonify(albums)

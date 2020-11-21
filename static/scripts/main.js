@@ -22,4 +22,55 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   
+    // CHANGE ALBUMS BY GENRE 
+
+    const genreLinks = document.querySelectorAll(".genre-link");
+    const albumsContainer = document.querySelector("#albums");
+
+    const createAlbumImage = (albumName) => {
+      const div = document.createElement("div");
+      div.setAttribute("style", "height: 250px");
+      div.classList = ["column", "is-one-fifth", "has-text-centered", "is-vcentered"]
+      const img = document.createElement("img");
+      img.className = "mt-6";
+      img.setAttribute("src", `static/images/${albumName}.jpg`)
+      const p = document.createElement("p");
+      p.textContent = albumName;
+      div.appendChild(img);
+      div.appendChild(p);
+      return div 
+    }
+
+    const updateAlbums = async (id) => {
+      try {
+        const body = JSON.stringify({ id });
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        const response = await fetch("/api/albumsByGenre", { method: "POST", body, headers })
+        const data = await response.json();
+        
+        const nodes = data.map(album => createAlbumImage(album[1]));
+        
+        // remove old albums 
+        while (albumsContainer.firstChild) {
+          albumsContainer.removeChild(albumsContainer.firstChild);
+        }
+        
+        // add new albums 
+        nodes.forEach(album => {
+          albumsContainer.appendChild(album)
+        });
+
+      } catch (err) {
+        console.error("an error occurred ", err);
+      }
+    }
+    
+    for (let link of genreLinks) {
+        const id = link.getAttribute("data-id");
+        link.addEventListener("click", () => updateAlbums(id));
+    }
+
+
   });
+

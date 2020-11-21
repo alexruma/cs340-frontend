@@ -32,7 +32,7 @@
                 <ul class="is-size-5">
                     <!-- need to use javascript here to update the displayed albums -->
                     {% for genre in context["genres"] %}
-                        <li><a data-id="{{genre[1]}}">{{ genre[0] }}</a></li>
+                        <li><a class="genre-link" data-id="{{genre[1]}}">{{ genre[0] }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -52,7 +52,7 @@
                     </div>           
                 </form>
                 <!-- albums -->
-                <div class="columns is-flex-wrap-wrap albums">
+                <div id="albums" class="columns is-flex-wrap-wrap albums">
                     {% if context %}
                         {% for album in context["albums"] %}
                             <div style="height: 250px" class="column is-one-fifth box has-text-centered is-vcentered">
