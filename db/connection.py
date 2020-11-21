@@ -38,7 +38,6 @@ def execute_query(connection, query, params=[]):
 
     data = cursor.fetchall()
     cursor.close()
-    connection.close() 
     return data 
 
 

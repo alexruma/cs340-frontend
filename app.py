@@ -13,7 +13,7 @@ def index():
     displays homepage 
     """
 
-    # get a bunch of albums from itunes 
+    # get a bunch of albums from itunes
     response = requests.get("https://itunes.apple.com/search?media=music&entity=album&limit=15&term=rap")
     response = response.json()
 
@@ -21,8 +21,24 @@ def index():
     query = "SELECT GenreName, GenreID FROM Genres"
     connection = connect() 
     genres = execute_query(connection, query)
+    
+    first_genre_id = genres[0][1]
 
-    return render_template('index.html', context={ "albums": response["results"], "genres": genres })
+    # get corresponding albums for first genre 
+    connection = connect()
+    albums_query = f"""Select Albums.AlbumID, Albums.AlbumName, Artists.ArtistName, 
+                Artists.ArtistID, Genres.GenreName FROM Genres
+                INNER JOIN Album_Genres ON Genres.GenreID = Album_Genres.GenreID
+                INNER JOIN Albums ON Album_Genres.AlbumID = Albums.AlbumID
+                INNER JOIN Album_Artists ON Albums.AlbumID = Album_Artists.AlbumID
+                INNER JOIN Artists ON Album_Artists.ArtistID = Artists.ArtistID
+                WHERE Genres.GenreID = {first_genre_id}"""
+    albums = execute_query(connection, albums_query)
+ 
+    connection.close()
+
+    return render_template('index.html', 
+        context={ "genres": genres, "albums": albums })
 
 @app.route('/about')
 def render_about():

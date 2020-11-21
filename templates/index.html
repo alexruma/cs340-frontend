@@ -36,6 +36,7 @@
                     {% endfor %}
                 </ul>
             </div>
+            
             <div class="column is-four-fifths">
                 <h1>Albums</h1>
                 <form class="columns">
@@ -55,9 +56,8 @@
                     {% if context %}
                         {% for album in context["albums"] %}
                             <div style="height: 250px" class="column is-one-fifth box has-text-centered is-vcentered">
-                                <img class="mt-6" src={{ album["artworkUrl100"]}} alt="album artwork for {{ album["collectionName"]}}"/>
-                                <p>{{ album["artistName"]}}</p>
-                            
+                                <img class="mt-6" src="static/images/{{album[1]}}.jpg" alt="album artwork for {{ album[1]}}"/>
+                                <p>{{ album[2]}}</p>
                             </div>
                         {% endfor %}
                     {% endif %}
