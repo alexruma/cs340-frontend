@@ -30,14 +30,14 @@ def index():
     # get corresponding albums for first genre 
     connection = connect()
     albums_query = f"""Select Albums.AlbumID, Albums.AlbumName, Artists.ArtistName, 
-                Artists.ArtistID, Genres.GenreName FROM Genres
+                Artists.ArtistID, Genres.GenreName, Albums.Price FROM Genres
                 INNER JOIN Album_Genres ON Genres.GenreID = Album_Genres.GenreID
                 INNER JOIN Albums ON Album_Genres.AlbumID = Albums.AlbumID
                 INNER JOIN Album_Artists ON Albums.AlbumID = Album_Artists.AlbumID
                 INNER JOIN Artists ON Album_Artists.ArtistID = Artists.ArtistID
                 WHERE Genres.GenreID = {first_genre_id}"""
     albums = execute_query(connection, albums_query)
- 
+    print(albums)
     connection.close()
 
     return render_template('index.html', 
@@ -81,8 +81,24 @@ def render_account():
 @app.route('/album/<id>')
 def render_album(id):
     connection = connect() 
-    album_data = execute_query(f"Select * FROM Albums WHERE ID = {id}")
-    return render_template('album-template.html', context={ "data": album_data })
+    query = f"""SELECT Albums.AlbumID, Albums.AlbumName, Albums.Price, Artists.ArtistName FROM Albums 
+    INNER JOIN Album_Artists ON Albums.AlbumID = Album_Artists.AlbumID
+    INNER JOIN Artists ON Album_Artists.ArtistID = Artists.ArtistID
+    WHERE Albums.AlbumID = {id}
+    """
+    album_data = execute_query(connection, query)[0]
+
+    query = f"""SELECT Genres.GenreName FROM Genres INNER JOIN Album_Genres ON Genres.GenreID = Album_Genres.GenreID
+    INNER JOIN Albums ON Album_Genres.AlbumID = Albums.AlbumID 
+    WHERE Albums.AlbumID = {id}"""
+    genres = execute_query(connection, query)
+    genres = [name[0] for name in genres]
+
+    query = f"""SELECT * FROM Tracks WHERE AlbumID = {id}"""
+    tracks = execute_query(connection, query)
+
+    connection.close()
+    return render_template('album-template.html', context={ "data": album_data, "genres": genres, "tracks": tracks })
 
 @app.route("/edit-account", methods=["GET", "POST"])
 def render_edit_account():
