@@ -4,11 +4,14 @@
 {% block content %}
 
 <div class="columns is-centered mt-6">
+    {% if context and context["error"] %}
+        <p>{{ context["error"] }}</p>
+    {% endif %}
     <form class="column is-half" method="POST" action="login">
         <div class="field">
-            <label for="user" class="label">User: </label>
+            <label for="user" class="label">Email: </label>
             <div class="control">
-                <input type="text" class="input" placeholder="username" name="user" required>
+                <input type="text" class="input" placeholder="email" name="email" required>
             </div>
         </div>
         <div class="field">

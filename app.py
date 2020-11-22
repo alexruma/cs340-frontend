@@ -2,7 +2,7 @@ import os
 
 from flask import Flask, render_template, request, session, redirect, jsonify
 import requests 
-from db.connection import connect, execute_query, insert_data
+from db.connection import connect, execute_query, insert_data, update_data
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -53,7 +53,30 @@ def render_cart():
 
 @app.route('/account')
 def render_account():
-    return render_template('account-template.html')
+    connection = connect()
+    user_id = session["user_id"]
+    # get user info to display, user favGenreID to get genre name 
+    query = f"""select firstName, lastName, email, GenreName from Customers
+                INNER JOIN Genres ON Customers.favGenre = Genres.GenreID
+                where CustomerID = {user_id} """
+    user = execute_query(connection, query)
+    firstName, lastName, email, favGenre = user[0]
+  
+    query = f"""SELECT Orders.OrderID, Customers.FirstName, SUM(Albums.Price)
+                FROM Customers INNER JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+                INNER JOIN Order_Albums ON Orders.OrderID = Order_Albums.OrderID 
+                INNER JOIN Albums ON Order_Albums.AlbumID = Albums.AlbumID 
+                WHERE Customers.CustomerID = {user_id} GROUP BY OrderID;"""
+    orders = execute_query(connection, query)
+    connection.close() 
+
+    return render_template('account-template.html', context={ 
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": email,
+        "favGenre": favGenre,
+        "orders": orders 
+    })
 
 @app.route('/album/<id>')
 def render_album(id):
@@ -61,9 +84,42 @@ def render_album(id):
     album_data = execute_query(f"Select * FROM Albums WHERE ID = {id}")
     return render_template('album-template.html', context={ "data": album_data })
 
-@app.route("/edit-account")
+@app.route("/edit-account", methods=["GET", "POST"])
 def render_edit_account():
-    return render_template("edit-account-template.html")
+    if request.method == "GET":
+        connection = connect()
+        user_id = session["user_id"]
+        # get user info to display, user favGenreID to get genre name 
+        query = f"""select firstName, lastName, email, GenreName from Customers
+                    INNER JOIN Genres ON Customers.favGenre = Genres.GenreID
+                    where CustomerID = {user_id} """
+        user = execute_query(connection, query)
+        firstName, lastName, email, favGenre = user[0]
+        query = "select GenreID, GenreName from Genres"
+        genres = execute_query(connection, query)
+        connection.close()
+        return render_template("edit-account-template.html", context={
+            "firstName": firstName,
+            "lastName": lastName,
+            "email": email,
+            "favGenre": favGenre,
+            "genres": genres
+        })
+    else:
+        try:
+            columns = ("FirstName", "LastName", "Email", "FavGenre")
+            values = (request.form["firstName"], request.form["lastName"], request.form["email"], int(request.form["favGenre"]))
+            model = "Customer"
+            update_data(model, columns, values, session["user_id"])
+            
+            if "error" in session:
+                del session["error"]
+            
+            return redirect("/account")
+        except Exception as e: 
+            session["error"] = "there was an error updating the customer information"
+            return redirect("/edit-account") 
+
 
 @app.route('/admin')
 def render_admin():
@@ -91,7 +147,7 @@ def render_create_account():
                 request.form["email"],
                 int(request.form["favGenre"])
             )
-            insert_data("Customers", ("FirstName", "LastName", "Email", "FavGenre"), values)
+            insert_data("Customers", ["FirstName", "LastName", "Email", "FavGenre"], values)
             return redirect("/")
         except Exception as e:
             print(e)
@@ -109,12 +165,24 @@ def login():
     if request.method == "GET":
         return render_template("login.html")
     else:
-        session["logged_in"] = True 
-        print(request.form["user"])
-        if request.form["user"] == "admin":
+        if request.form["email"] == "admin":
             session["admin"] = True 
+            session["logged_in"] = True
             return redirect("/admin/add")
-        return redirect("/")
+        else:
+            # attempt to get user from the database 
+            connection = connect()
+            email = request.form["email"]
+            query = f"select * from customers where email = '{email}'"
+            user = execute_query(connection, query)
+            connection.close()
+
+            if len(user) == 1:
+                session["logged_in"] = True 
+                session["user_id"] = user[0][0]
+                return redirect("/")
+            else:
+                return render_template("login.html", context={"error": "user not found"})
 
 @app.route("/logout")
 def logout():

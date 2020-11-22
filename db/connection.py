@@ -46,8 +46,34 @@ def insert_data(table, columns, values):
     columns = ", ".join(columns)
     query = f"Insert into {table} (" + columns + f") values {values}"
     cursor.execute(query)
+    connection.commit()
     cursor.close() 
     connection.close()
+
+def update_data(model, columns, values, row):
+    if len(columns) != len(values):
+        raise ValueError
+
+    connection = connect()
+    cursor = connection.cursor() 
+    query = f"UPDATE {model}s SET "
+    for i in range(len(columns)):
+        if type(values[i]) == str:
+            query += f"{columns[i]} = '{values[i]}'"
+        else:
+            query += f"{columns[i]} = {values[i]}"
+
+        if i < len(columns) - 1:
+            query += ", "
+        else:
+            query += " "
+
+    query += f"WHERE {model}ID = {row}"
+    cursor.execute(query) 
+    connection.commit()
+    cursor.close()
+    connection.close() 
+
 
     
 

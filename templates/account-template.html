@@ -7,10 +7,10 @@
         <section class="mb-6 box">
             <h2 class="is-underlined">My Info</h2>
             <ul>
-                <li><span class="has-text-weight-bold">First Name:</span> Test</li>
-                <li><span class="has-text-weight-bold">Last Name:</span> User</li>
-                <li><span class="has-text-weight-bold">Email:</span> Test.User@plusrecords.com</li>
-                <li><span class="has-text-weight-bold">Favorite Genre:</span> Alternative Rock</li>
+                <li><span class="has-text-weight-bold">First Name:</span> {{ context["firstName"]}}</li>
+                <li><span class="has-text-weight-bold">Last Name:</span> {{context["lastName"]}}</li>
+                <li><span class="has-text-weight-bold">Email:</span> {{ context["email"]}}</li>
+                <li><span class="has-text-weight-bold">Favorite Genre:</span> {{ context["favGenre"]}}</li>
             </ul>
 
         </section>
