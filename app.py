@@ -2,7 +2,7 @@ import os
 
 from flask import Flask, render_template, request, session, redirect, jsonify
 import requests 
-from db.connection import connect, execute_query
+from db.connection import connect, execute_query, insert_data
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -57,7 +57,9 @@ def render_account():
 
 @app.route('/album/<id>')
 def render_album(id):
-    return render_template('album-template.html')
+    connection = connect() 
+    album_data = execute_query(f"Select * FROM Albums WHERE ID = {id}")
+    return render_template('album-template.html', context={ "data": album_data })
 
 @app.route("/edit-account")
 def render_edit_account():
@@ -79,9 +81,28 @@ def render_admin_add(view):
     
     return render_template('admin.html', view=view)
 
-@app.route("/create-account")
+@app.route("/create-account", methods=["GET", "POST"])
 def render_create_account():
-    return render_template("create-account.html")
+    if request.method == "POST":
+        try:
+            values = (
+                request.form["firstName"],
+                request.form["lastName"],
+                request.form["email"],
+                int(request.form["favGenre"])
+            )
+            insert_data("Customers", ("FirstName", "LastName", "Email", "FavGenre"), values)
+            return redirect("/")
+        except Exception as e:
+            print(e)
+            return render_template("create-account.html", context={"error": "an error occurred!"})
+    else:
+        # get list of genres for sidebar menu 
+        query = "SELECT GenreName, GenreID FROM Genres"
+        connection = connect() 
+        genres = execute_query(connection, query)
+        connection.close()
+        return render_template("create-account.html", context={"genres": genres})
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

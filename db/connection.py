@@ -40,6 +40,17 @@ def execute_query(connection, query, params=[]):
     cursor.close()
     return data 
 
+def insert_data(table, columns, values):
+    connection = connect()
+    cursor = connection.cursor()
+    columns = ", ".join(columns)
+    query = f"Insert into {table} (" + columns + f") values {values}"
+    cursor.execute(query)
+    cursor.close() 
+    connection.close()
+
+    
+
 
      
 
