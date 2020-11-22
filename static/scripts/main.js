@@ -28,6 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const albumsContainer = document.querySelector("#albums");
 
     const createAlbumImage = (albumName) => {
+      // return a node <div><img><p></div>
+      // put album img src into image and title into p
+
       const div = document.createElement("div");
       div.setAttribute("style", "height: 250px");
       div.classList = ["column", "is-one-fifth", "has-text-centered", "is-vcentered"]
@@ -41,12 +44,12 @@ document.addEventListener('DOMContentLoaded', () => {
       return div 
     }
 
-    const updateAlbums = async (id) => {
+    const updateAlbums = async (search, api) => {
       try {
-        const body = JSON.stringify({ id });
+        const body = JSON.stringify({ search });
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
-        const response = await fetch("/api/albumsByGenre", { method: "POST", body, headers })
+        const response = await fetch(api, { method: "POST", body, headers })
         const data = await response.json();
         
         const nodes = data.map(album => createAlbumImage(album[1]));
@@ -65,11 +68,23 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("an error occurred ", err);
       }
     }
-    
+  
+    // add click handlers to each link 
     for (let link of genreLinks) {
         const id = link.getAttribute("data-id");
-        link.addEventListener("click", () => updateAlbums(id));
+        link.addEventListener("click", () => updateAlbums(id, "/api/albumsByGenre"));
     }
+
+    // SEARCH ALBUMS 
+
+    const searchBar = document.querySelector("#search");
+    const searchText = document.querySelector("#searchText");
+
+    searchBar.addEventListener("submit", (e) => {
+      const apiURL = "/api/albumsSearch";
+      e.preventDefault();
+      updateAlbums(searchText.value, apiURL);
+    });
 
 
   });

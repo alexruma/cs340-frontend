@@ -7,6 +7,9 @@ from db.connection import connect, execute_query
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
+## Think it would be good to have queries in another file as functions that take in the parameters to complete them
+
+
 @app.route('/')
 def index():
     """
@@ -105,7 +108,7 @@ def logout():
 @app.route("/api/albumsByGenre", methods=["POST"])
 def getAlbums():
     data = request.get_json()
-    genreID = data["id"]
+    genreID = data["search"]
 
     connection = connect()
     albums_query = f"""Select Albums.AlbumID, Albums.AlbumName, Artists.ArtistName, 
@@ -120,3 +123,24 @@ def getAlbums():
     connection.close()
 
     return jsonify(albums)
+
+@app.route("/api/albumsSearch", methods=["POST"])
+def searchAlbums():
+    data = request.get_json()
+    search = data["search"]
+
+    connection = connect()
+    albums_query = f"""Select Albums.AlbumID, Albums.AlbumName, Artists.ArtistName, 
+                Artists.ArtistID, Genres.GenreName FROM Genres
+                INNER JOIN Album_Genres ON Genres.GenreID = Album_Genres.GenreID
+                INNER JOIN Albums ON Album_Genres.AlbumID = Albums.AlbumID
+                INNER JOIN Album_Artists ON Albums.AlbumID = Album_Artists.AlbumID
+                INNER JOIN Artists ON Album_Artists.ArtistID = Artists.ArtistID
+                WHERE Genres.GenreName LIKE '%{search}%' OR Artists.ArtistName LIKE '%{search}%'
+                OR Albums.AlbumName LIKE '%{search}%'"""
+    albums = execute_query(connection, albums_query)
+ 
+    connection.close()
+
+    return jsonify(albums)
+
