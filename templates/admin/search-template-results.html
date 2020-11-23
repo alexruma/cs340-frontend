@@ -1,0 +1,31 @@
+
+{% extends "layout/layout_template.html" %}
+{% block title %}Search Results{% endblock %}
+{% block content %}
+
+<form id="admin-album-search" action="/admin-search" method="POST"> 
+    <label class="label" for="album-name-input">Album Search by Name:</label>
+    <input class="input" type="text" name="album-name-input">
+    <label class="label" for="album-id-input">Album Search by ID:</label>
+    <input class="input" type="number" name="album-id-input">
+    <input type="submit">
+</form>
+
+<form id="display-all-albums" action="/admin-album-display-all" method="POST"> 
+    <input class="input" type="hidden" name="display-all", value="display-all">
+    <input type="submit" value = "See All">
+</form>
+
+<div>
+    <h3>Results:</h3>
+    <div class="is-one-half">
+        
+        <h4 class="is-size-1" id="album-header">Album Details</h4>
+            <h4 ><span class="has-text-weight-bold">Album ID: </span> {{ context["data"][0]}}</h4>
+            <h4 ><span class="has-text-weight-bold">Album: </span> {{ context["data"][1]}}</h4>
+            <h4 ><span class="has-text-weight-bold">Artist: </span> {{ context["data"][3]}}</h4>
+            <h4 ><span class="has-text-weight-bold">Price: </span> {{ context["data"][2]}}</h4>
+        
+    </div>
+</div>
+{% endblock %}

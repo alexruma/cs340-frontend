@@ -3,6 +3,7 @@
 {% block content %}
 <nav class="breadcrumb" aria-label="breadcrumbs">
     <ul>
+    <li><a href="search" class={{ "active" if view == "search" or "" else ""}}>Search</a></li>
       <li><a href="add" class={{ "active" if view == "add" or "" else ""}}>Add</a></li>
       <li><a href="edit" class={{ "active" if view == "edit" else "" }}>Edit</a></li>
       <li><a href="delete" class={{ "active" if view == "delete" else ""}}>Delete</a></li>
@@ -10,7 +11,9 @@
     </ul>
   </nav>
    <section class="mb-4">
-        {% if view == "add" %}
+        {% if view == "search" %}
+        {% include "admin/search-template.html" %}
+        {% elif view == "add" %}
             {% include "admin/add-template.html" %}
         {% elif view == "edit" %}
             {% include "admin/update-template.html" %}

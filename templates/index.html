@@ -39,16 +39,16 @@
             
             <div class="column is-four-fifths">
                 <h1>Albums</h1>
-                <form id="search" class="columns">
+                <form id="search" class="columns" action ="/album" method="GET">
                     <div class="column is-1">
                         <label class="label" for="search">Search</label>
                     </div>
                     <div class="column is-three-fifths">
-                        <input class="input" type="text" name="search" id="searchText"
+                        <input class="input" type="text" name="album-search" id="searchText"
                         placeholder="enter album or artist name" />
                     </div>
                     <div class="column is-one-fifth">
-                        <button class="button">Search</button> 
+                        <input class="button" type="submit" value="Search">
                     </div>           
                 </form>
                 <!-- albums -->
