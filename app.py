@@ -1,7 +1,7 @@
 import os
 
 from flask import Flask, render_template, request, session, redirect, jsonify
-import requests 
+import requests
 from db.connection import connect, execute_query, insert_data, update_data
 
 app = Flask(__name__)
@@ -78,8 +78,9 @@ def render_account():
         "orders": orders 
     })
 
-@app.route('/album/<id>')
-def render_album(id):
+@app.route('/album', methods=["GET"])
+def render_album():
+   # album_name = request.args.
     connection = connect() 
     query = f"""SELECT Albums.AlbumID, Albums.AlbumName, Albums.Price, Artists.ArtistName FROM Albums 
     INNER JOIN Album_Artists ON Albums.AlbumID = Album_Artists.AlbumID
@@ -143,15 +144,102 @@ def render_admin():
         return render_template("index.html")
     return redirect("/admin/add")
 
-@app.route("/admin/<view>")
+@app.route("/admin/<view>", methods=["GET", "POST"])
 def render_admin_add(view):
     if "admin" not in session or not session["admin"]:
         return render_template("index.html")
 
-    if view not in ["add", "edit", "delete", "orders"]:
+    if view not in ["add", "edit", "delete", "orders", "search"]:
         view = "add"
-    
+   
     return render_template('admin.html', view=view)
+
+
+# Customer search for albums by name or ID.
+@app.route("/admin-customer-search", methods=["GET", "POST"])
+def display_customer_search_results():
+    if "admin" not in session or not session["admin"]:
+        return render_template("index.html")
+   
+    customer_name = request.form["customer-name-input"]
+    customer_id = request.form["customer-id-input"]
+    print(customer_name)
+    # Search by customer name.
+    if customer_name:
+        connection = connect()
+        query = f""" SELECT * FROM Customers WHERE FirstName = '{customer_name}' OR LastName = '{customer_name}'
+        """
+        customer_data = execute_query(connection, query)
+        connection.close()
+    
+    # Search by customer ID.
+    else:
+        connection = connect()
+        query = f""" SELECT * FROM Customers WHERE CustomerId = '{customer_id}'
+        """
+        customer_data = execute_query(connection, query)
+        connection.close()
+        print(customer_data)
+    
+    return render_template('admin/search-template-results.html', album_data = [], customer_data = customer_data)
+
+# Admin display all customers.
+@app.route("/admin-customer-display-all", methods=["GET", "POST"])
+def display_all_customers():
+
+    connection = connect() 
+    query = f""" SELECT * FROM Customers"""
+    customer_data = execute_query(connection, query)
+    connection.close()
+
+    return render_template('admin/search-template-results.html', album_data = [], customer_data = customer_data)
+
+# Adimn search for albums by name or ID.
+@app.route("/admin-search", methods=["GET", "POST"])
+def display_search_results():
+    if "admin" not in session or not session["admin"]:
+        return render_template("index.html")
+
+    album_name = request.form["album-name-input"]
+    album_id = request.form["album-id-input"]
+    
+    # Search by album name.
+    if album_name:
+        connection = connect() 
+        query = f"""SELECT Albums.AlbumID, Albums.AlbumName, Albums.Price, Artists.ArtistName, Albums.CopiesInStock, Albums.ReleasedYear FROM Albums 
+        INNER JOIN Album_Artists ON Albums.AlbumID = Album_Artists.AlbumID
+        INNER JOIN Artists ON Album_Artists.ArtistID = Artists.ArtistID
+        WHERE Albums.AlbumName = '{album_name}'
+        """
+        album_data = execute_query(connection, query)
+        connection.close()
+    
+    # Search by ID.
+    else: 
+        connection = connect() 
+        query = f"""SELECT Albums.AlbumID, Albums.AlbumName, Albums.Price, Artists.ArtistName,Albums.CopiesInStock, Albums.ReleasedYear FROM Albums 
+        INNER JOIN Album_Artists ON Albums.AlbumID = Album_Artists.AlbumID
+        INNER JOIN Artists ON Album_Artists.ArtistID = Artists.ArtistID
+        WHERE Albums.AlbumID = '{album_id}'
+        """
+        album_data = execute_query(connection, query)
+        connection.close()
+
+    return render_template('admin/search-template-results.html', album_data = album_data)
+
+# Admin display all albums.
+@app.route("/admin-album-display-all", methods=["GET", "POST"])
+def display_all_albums():
+
+    connection = connect() 
+    query = f"""SELECT Albums.AlbumID, Albums.AlbumName, Albums.Price, Artists.ArtistName, Albums.CopiesInStock, Albums.ReleasedYear FROM Albums 
+        INNER JOIN Album_Artists ON Albums.AlbumID = Album_Artists.AlbumID
+        INNER JOIN Artists ON Album_Artists.ArtistID = Artists.ArtistID
+        """
+    album_data = execute_query(connection, query)
+    connection.close()
+
+    return render_template('admin/search-template-results.html', album_data = album_data)
 
 @app.route("/create-account", methods=["GET", "POST"])
 def render_create_account():
@@ -249,3 +337,5 @@ def searchAlbums():
 
     return jsonify(albums)
 
+if __name__ == "__main__":
+    app.run(debug=True)

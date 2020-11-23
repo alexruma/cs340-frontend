@@ -10,6 +10,7 @@ class Model:
         connection = connect() 
         return execute_query(connection, query)
 
+    # Syntax error with this method. Will look into later.
     def select_where(self, columns=("*"), where=[]):
         query = f"select {columns} from {self.name}"
         if where:

@@ -5,9 +5,11 @@
     <div class = "details-main-div columns">
         <div class="is-one-half">
             <h1 class="is-size-1" id="album-header">Album Details</h1>
+            <h2 ><span class="has-text-weight-bold">Album ID: </span> {{ context["data"][0]}}</h2>
             <h2 ><span class="has-text-weight-bold">Album: </span> {{ context["data"][1]}}</h2>
             <h3 ><span class="has-text-weight-bold">Artist: </span> {{ context["data"][3]}}</h3>
-            <h4 ><span class="has-text-weight-bold">Genre: </span>{{ ", ".join(context["genres"])}}</h4>
+            <h3 ><span class="has-text-weight-bold">Price: </span> {{ context["data"][2]}}</h3>
+            
         </div>
         <div class="is-one-half ml-5">
             <img src="{{ url_for("static", filename="images/")}}{{context["data"][1]}}.jpg" />

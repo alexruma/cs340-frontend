@@ -1,0 +1,32 @@
+
+{% extends "layout/layout_template.html" %}
+{% block title %}Search Results{% endblock %}
+{% block content %}
+<form id="admin-customer-search" action="/admin-customer-search" method="POST"> 
+    <label class="label" for="customer-name-input">Cstomer Search by Name:</label>
+    <input class="input" type="text" name="customer-name-input">
+    <label class="label" for="customer-id-input">Customer Search by ID:</label>
+    <input class="input" type="number" name="customer-id-input">
+    <input type="submit">
+</form>
+
+<form id="display-all-customers" action="/admin-customer-display-all" method="POST"> 
+    <input class="input" type="hidden" name="display-all", value="display-all">
+    <input type="submit" value = "See All">
+</form>
+<br>
+
+<form id="admin-album-search" action="/admin-search" method="POST"> 
+    <label class="label" for="album-name-input">Album Search by Name:</label>
+    <input class="input" type="text" name="album-name-input">
+    <label class="label" for="album-id-input">Album Search by ID:</label>
+    <input class="input" type="number" name="album-id-input">
+    <input type="submit">
+</form>
+
+<form id="display-all-albums" action="/admin-album-display-all" method="POST"> 
+    <input class="input" type="hidden" name="display-all", value="display-all">
+    <input type="submit" value = "See All">
+</form>
+
+{% endblock %}
