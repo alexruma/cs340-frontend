@@ -11,7 +11,7 @@
     </ul>
   </nav>
    <section class="mb-4">
-        {% if view == "search" %}
+    {% if view == "search" %}
         {% include "admin/search-template.html" %}
         {% elif view == "add" %}
             {% include "admin/add-template.html" %}
@@ -21,7 +21,10 @@
             {% include "admin/delete-template.html" %}
         {% elif view == "orders" %}
             {% include "admin/manage-orders-template.html" %}
-        {% endif %}
+        {% elif view == "search-results" %}
+             {% include "admin/search-template-results.html" %}       
+        
+    {% endif %}
         
        
        

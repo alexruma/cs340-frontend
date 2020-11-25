@@ -2,7 +2,16 @@
 {% extends "layout/layout_template.html" %}
 {% block title %}Search Results{% endblock %}
 {% block content %}
-
+ 
+<nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+        <li><a href="/admin/search" class={{ "active" if view == "search" or "" else ""}}>Search</a></li>
+          <li><a href="/admin/add" class={{ "active" if view == "add" or "" else ""}}>Add</a></li>
+          <li><a href="/admin/edit" class={{ "active" if view == "edit" else "" }}>Edit</a></li>
+          <li><a href="/admin/delete" class={{ "active" if view == "delete" else ""}}>Delete</a></li>
+          <li><a href="/admin/orders" class={{ "active" if view == "orders" else ""}}>Manage Orders</a></li>
+        </ul>
+    </nav>
 <!-- Customer Search Forms-->
 <form id="admin-customer-search" action="/admin-customer-search" method="POST"> 
     <label class="label" for="customer-name-input">Cstomer Search by Name:</label>

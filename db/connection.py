@@ -38,7 +38,40 @@ def execute_query(connection, query, params=[]):
 
     data = cursor.fetchall()
     cursor.close()
-    return data 
+    return data
+
+def execute_non_select_query(connection, query, params=()):
+    """
+    Same as as execute_query() but does not return anything.
+    Takes a connection, query string, and params to be inserted into query string. 
+    """
+    if connection is None:
+        print("no connection")
+        return 
+
+    if query is None or len(query.strip()) == 0:
+        print("query is empty")
+        return 
+
+    print(f"Executing {query} with params {params}")
+
+    cursor = connection.cursor(buffered=True) 
+    query_params = () 
+
+    for param in params:
+        query_params = query_params + (param,)
+
+    # must add data to sanitize query 
+    cursor.execute(query, query_params)
+    
+    # Commit chnge
+    connection.commit()
+    cursor.close()
+
+
+
+
+
 
 def insert_data(table, columns, values):
     connection = connect()

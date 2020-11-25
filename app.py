@@ -1,8 +1,9 @@
 import os
 
-from flask import Flask, render_template, request, session, redirect, jsonify
+from flask import Flask, render_template, request, session, redirect, jsonify, url_for
 import requests
 from db.connection import connect, execute_query, insert_data, update_data
+from db.model import get_genre_id_from_name, get_artist_id_from_name, add_artist, add_album
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -149,11 +150,13 @@ def render_admin_add(view):
     if "admin" not in session or not session["admin"]:
         return render_template("index.html")
 
-    if view not in ["add", "edit", "delete", "orders", "search"]:
+    if view not in ["add", "edit", "delete", "orders", "search", "search-results"]:
         view = "add"
    
     return render_template('admin.html', view=view)
 
+
+##SEARCH PAGE ROUTING 
 
 # Customer search for albums by name or ID.
 @app.route("/admin-customer-search", methods=["GET", "POST"])
@@ -225,6 +228,7 @@ def display_search_results():
         album_data = execute_query(connection, query)
         connection.close()
 
+    #return redirect("/admin/search-results")
     return render_template('admin/search-template-results.html', album_data = album_data)
 
 # Admin display all albums.
@@ -238,8 +242,47 @@ def display_all_albums():
         """
     album_data = execute_query(connection, query)
     connection.close()
-
+    
+    # return redirect("/admin/search-results")
     return render_template('admin/search-template-results.html', album_data = album_data)
+
+
+##ADMIN ADD PAGE ROUTING
+
+# Add album to DB.
+@app.route("/add-album", methods = ["POST"])
+def admin_add_album():
+   
+    # Get POST request data'
+    album_name = request.form['album-name']
+    artist_name = request.form['artist-name']
+    price = request.form['price']
+    copies_in_stock = request.form['copiesInStock']
+    release_year = request.form['year']
+    genre_name = request.form['genre']
+    genre_id = get_genre_id_from_name(genre_name)
+
+    # Verify that artist exists.
+    artist_id = get_artist_id_from_name(artist_name)
+    print(artist_id)
+
+   # Add arist if does not exist.
+    if not artist_id:
+        add_artist(artist_name, genre_id)
+        artist_id = get_artist_id_from_name(artist_name)
+        
+    
+    # Add album
+    add_album(album_name, artist_id, price, copies_in_stock, release_year, genre_id)
+    return redirect("/admin/add")
+
+
+# Add artist to DB.
+@app.route("/add-artist", methods = ["POST"])
+def admin_add_artist():
+    artist_name = request.form['artist-name']
+    add_artist(artist_name)
+    return redirect("/admin/add")
 
 @app.route("/create-account", methods=["GET", "POST"])
 def render_create_account():

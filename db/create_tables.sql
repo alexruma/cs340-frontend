@@ -117,7 +117,8 @@ INSERT INTO Genres (GenreName) VALUES
 ("Indie"),               
 ("Folk"),               
 ("EDM"),                 
-("R&B");                 
+("R&B"),
+("Classical");                 
 
 INSERT INTO Customers(FirstName, LastName, Email, FavGenre) VALUES 
 ("Alex", "Ruma", "rumaa@oregonstate.edu", 1),     
