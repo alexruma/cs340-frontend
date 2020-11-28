@@ -1,8 +1,9 @@
+
 <div class="columns">
     <section class="column is-half">
         <h1 class="is-size-3">Update Album</h1>
         <!-- search by album name? -->
-        <form class="flex flex-row">
+        <form class="flex flex-row" id="search-album">
                 <div class="field">
                     <label class="label" for="album-name">Album name:</label>
                     <input class="input" type="text" id="album-name" name="album-name"><br>
@@ -23,7 +24,11 @@
             <div class="field">
                 <label class="label" for="artist-name">Artist name:</label>
                 <div class="control">
-                    <input class="input" type="text" id="artist-name" name="artist-name">
+                    <select name="artist-name" id="artist-name">
+                        {% for artist in artists %}
+                            <option value={{ artist[0] }}>{{artist[1]}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
             <div class="field">
@@ -37,11 +42,9 @@
                 <label class="genre" for="genre">Genre:</label>
                 <div class="control">
                     <select class="select" name="genre">
-                        <option value="1">Rock</option>
-                        <option value="2">Rap</option>
-                        <option value="3">Classical</option>
-                        <option value="4">Hip-Hop</option>
-                        <option value="5">Country</option>
+                        {% for genre in genres %}
+                            <option value={{ genre[0] }}>{{ genre[1] }}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
@@ -120,3 +123,4 @@
         </form>
     </section>
 </div>
+<script src={{ url_for("static", filename="scripts/update.js")}} />

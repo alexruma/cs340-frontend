@@ -3,7 +3,7 @@ import os
 from flask import Flask, render_template, request, session, redirect, jsonify, url_for
 import requests
 from db.connection import connect, execute_query, insert_data, update_data
-from db.model import get_genre_id_from_name, get_artist_id_from_name, add_artist, add_album
+from db.model import get_genre_id_from_name, get_artist_id_from_name, add_artist, add_album, get_all_artists, get_all_genres
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -143,6 +143,7 @@ def render_edit_account():
 def render_admin():
     if "admin" not in session or not session["admin"]:
         return render_template("index.html")
+
     return redirect("/admin/add")
 
 @app.route("/admin/<view>", methods=["GET", "POST"])
@@ -152,8 +153,11 @@ def render_admin_add(view):
 
     if view not in ["add", "edit", "delete", "orders", "search", "search-results"]:
         view = "add"
-   
-    return render_template('admin.html', view=view)
+    
+    artists = get_all_artists()
+    genres = get_all_genres()
+    
+    return render_template('admin.html', view=view, artists=artists, genres=genres)
 
 
 ##SEARCH PAGE ROUTING 

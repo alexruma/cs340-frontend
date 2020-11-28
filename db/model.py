@@ -122,6 +122,21 @@ def get_artist_id_from_name(name):
     
     return artist_id
 
+def get_album_id_from_name(name):
+    """
+    Takes the name of an artist as parameter and returns the ArtistID
+    """
+    connection = connect()
+    query = f""" SELECT Albums.AlbumID FROM Albums WHERE Albums.AlbumName = '{name}'"""
+    album_id = execute_query(connection, query)
+    connection.close()
+    
+    # Trim ID it it exists to return just int vlaue.
+    if album_id:
+        album_id = album_id[0][0]
+    
+    return album_id
+
 def get_genre_id_from_name(name):
     """
     Takes the name of an genre as parameter and returns the GenreID.
@@ -147,6 +162,46 @@ def get_album_id_from_name_year(name, year):
     connection.close()
     
     return album_id
+
+def get_all_genres():
+    """
+    returns list of tuple with genre name and id 
+    """
+    connection = connect() 
+    query = "SELECT GenreID, GenreName FROM Genres";
+    genres = execute_query(connection, query)
+    connection.close()
+    return genres 
+
+def get_all_artists():
+    """
+    returns list of tuple with artist name and id 
+    """
+    connection = connect() 
+    query = "SELECT ArtistID, ArtistName FROM Artists";
+    genres = execute_query(connection, query)
+    connection.close()
+    return genres 
+
+def get_album_from_id_or_name(id=None,name=None):
+    connection = connect()
+    if id:
+        query = f"""SELECT Albums.AlbumID, Albums.AlbumName, Albums.Price, Genres.GenreID, Artists.ArtistID FROM
+            Albums INNER JOIN Album_Artists ON Albums.AlbumID = Album_Artists.AlbumID
+            INNER JOIN Artists ON Artists.ArtistID = Album_Artists.ArtistID
+            INNER JOIN Album_Genres ON Albums.AlbumID = Album_Genres.AlbumID
+            INNER JOIN Genres ON Album_Genres.GenreID = Genres.GenreID
+            WHERE Albums.AlbumID = {id}"""
+    else:
+        query = f"""SELECT Albums.AlbumID, Albums.AlbumName, Albums.Price, Genres.GenreID, Artists.ArtistID FROM
+            Albums INNER JOIN Album_Artists ON Albums.AlbumID = Album_Artists.AlbumID
+            INNER JOIN Artists ON Artists.ArtistID = Album_Artists.ArtistID
+            INNER JOIN Album_Genres ON Albums.AlbumID = Album_Genres.AlbumID
+            INNER JOIN Genres ON Album_Genres.GenreID = Genres.GenreID
+            WHERE Albums.AlbumName = '{name}'"""
+    album_info = execute_query(connection, query)
+    connection.close()
+    return album_info
 
 
 

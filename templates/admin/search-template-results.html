@@ -14,7 +14,7 @@
     </nav>
 <!-- Customer Search Forms-->
 <form id="admin-customer-search" action="/admin-customer-search" method="POST"> 
-    <label class="label" for="customer-name-input">Cstomer Search by Name:</label>
+    <label class="label" for="customer-name-input">Customer Search by Name:</label>
     <input class="input" type="text" name="customer-name-input">
     <label class="label" for="customer-id-input">Customer Search by ID:</label>
     <input class="input" type="number" name="customer-id-input">
@@ -66,12 +66,6 @@
             <h4 ><span class="has-text-weight-bold">Release Year: </span> {{ album[5]}}</h4>
             <h4 ><span class="has-text-weight-bold">Copies in Stock: </span> {{ album[4]}}</h4>
             <br>
-        {% endfor %}
-        {% for customer in customer_data %}
-        <h4 ><span class="has-text-weight-bold">Customer ID: </span> {{ customer[0] }}</h4>
-        <h4 ><span class="has-text-weight-bold">Customer Name: </span> {{ customer[1] + " " + customer[2] }}</h4>
-        <h4 ><span class="has-text-weight-bold">Customer Email: </span> {{ customer[3] }}</h4>
-        <h4 ><span class="has-text-weight-bold">Customer Favorite Genre: </span> {{ customer[4] }}</h4>
         {% endfor %}
     </div>
 </div>
