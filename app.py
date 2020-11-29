@@ -400,5 +400,20 @@ def updateAlbum():
     status = update("Albums", fields, values, data["albumID"])
     return jsonify({ "status" : status })
 
+@app.route("/api/getArtist", methods=["POST"])
+def getArtist():
+    data = request.get_json()
+    print(data)
+    artist = get_artist_id_from_name(data["artistName"])
+    return jsonify(artist)
+
+@app.route("/api/updateArtist", methods=["POST"])
+def updateArtist():
+    data = request.get_json()
+    artistID = data["artistID"]
+    artistName = data["artistName"]
+    status = update("Artists", ["artistName"], [artistName], artistID)
+    return jsonify(status)
+
 if __name__ == "__main__":
     app.run(debug=True)

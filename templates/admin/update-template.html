@@ -3,6 +3,9 @@
     <section class="column is-half">
         <h1 class="is-size-3">Update Album</h1>
         <!-- search by album name? -->
+        <!-- need to change the way we do genre/artist -->
+        <!-- should have separate forms that delete artists/genres or add artists/genres -->
+        <!-- but ensure that there is at least 1 of each -->
         <p id="album-error" class="has-text-danger"></p>
         <form class="flex flex-row" id="search-album">
                 <div class="field">
@@ -86,17 +89,19 @@
 </div>
 <div class="columns">
     <section class="column is-half">
+        <p id="search-artist-error" class="has-text-danger"></p>
         <h1 class="is-size-3">Update Artist</h1>
-        <form class="mb-3">
+        <form class="mb-3" id="search-update-artist">
             <label class="label">Search Artist</label>
-            <input type="text" class="input mb-2" name="artist" placeholder="search"/>
+            <input type="text" class="input mb-2" name="artist_name" placeholder="search" id="search-artist"/>
             <button class="button is-link">Search</button>
         </form>
-        <form>
+        <form id="update-artist">
             <div class="field">
                 <label class="label" for="artist_name">Name: </label>
+                <input class="is-hidden" type="text" name="update-artist-id" id="update-artist-id" />
                 <div class="control">
-                    <input class="input" type="text" name="artist_name" placeholder="artist name" />
+                    <input class="input" type="text" id="update-artist-artist-name" name="artist_name" placeholder="artist name" />
                 </div>
             </div>
             <div class="field">

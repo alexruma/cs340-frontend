@@ -50,13 +50,71 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
-        const request = await fetch("/api/updateAlbum", { body, headers, method: "POST" });
-        const data = await request.json();
-        if (data.status === "fail") {
-            alert("there was an error updating your form!");
-        } else {
-            alert("album updated!");
-            updateAlbumForm.reset();
+        try {
+            const request = await fetch("/api/updateAlbum", { body, headers, method: "POST" });
+            const data = await request.json();
+            if (data.status === "fail") {
+                alert("there was an error updating your form!");
+            } else {
+                alert("album updated!");
+                updateAlbumForm.reset();
+            }
+        } catch (e) {
+            console.log(e);
+            albumError.text = "an error occurred!";
+        }
+    });
+
+    // UPDATE ARTIST
+    const updateArtistForm = document.querySelector("#update-artist");
+    const searchArtistForm = document.querySelector("#search-update-artist");
+    const searchArtist = document.querySelector("#search-artist")
+    const artistSearchError = document.querySelector("#search-artist-error");
+    const updateArtistName = document.querySelector("#update-artist-artist-name");
+    const updateArtistID = document.querySelector("#update-artist-id");
+
+    searchArtistForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        const body = JSON.stringify({ artistName: searchArtist.value });
+        try {
+            const request = await fetch("/api/getArtist", { headers, body, method: "POST"})
+            const data = await request.json();
+            if (data.length === 0) {
+                artistSearchError.textContent = "No artist found with that name";
+            } else {
+                artistSearchError.textContent = "";
+                updateArtistID.value = data;
+                updateArtistName.value = searchArtist.value;
+            }
+        } catch (e) {
+            console.error(e, "an error occurred");
+        }
+    });
+
+    updateArtistForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        const body = JSON.stringify({
+            artistID: updateArtistID.value,
+            artistName: updateArtistName.value 
+        });
+        try {
+            const request = await fetch("/api/updateArtist", { headers, body, method: "POST"});
+            const status = await request.json();
+            if (status === "fail") {
+                artistSearchError.textContent = "error occurred updating artist";
+            } else {
+                alert("artist updated!");
+                searchArtistForm.reset()
+                updateArtistForm.reset();
+                artistSearchError.textContent = "";
+            }
+        } catch (e) {
+            console.log(e);
+            artistSearchError.textContent = "an error occurred";
         }
     });
 
