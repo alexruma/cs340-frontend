@@ -3,7 +3,7 @@ import os
 from flask import Flask, render_template, request, session, redirect, jsonify, url_for
 import requests
 from db.connection import connect, execute_query, insert_data, update_data
-from db.model import get_genre_id_from_name, get_artist_id_from_name, add_artist, add_album, get_all_artists, get_all_genres
+from db.model import * 
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -383,6 +383,22 @@ def searchAlbums():
     connection.close()
 
     return jsonify(albums)
+
+@app.route("/api/getAlbumDetails", methods=["POST"])
+def getAlbumDetails():
+    data = request.get_json()
+    albumID = data["albumID"]
+    albumName = data["albumName"]
+    album = get_album_from_id_or_name(id=albumID, name = albumName)
+    return jsonify(album)
+
+@app.route("/api/updateAlbum", methods=["POST"])
+def updateAlbum():
+    data = request.get_json() 
+    fields = ["AlbumName", "Price", "ReleasedYear", "CopiesInStock"]
+    values = [data["albumName"], data["price"], data["ReleasedYear"], data["CopiesInStock"]]
+    status = update("Albums", fields, values, data["albumID"])
+    return jsonify({ "status" : status })
 
 if __name__ == "__main__":
     app.run(debug=True)

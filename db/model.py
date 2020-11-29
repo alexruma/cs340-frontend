@@ -61,7 +61,6 @@ def add_artist(name, genre_id = None):
   
     # Get the newly generated ArtistID.
     artist_id = get_artist_id_from_name(name)
-    print(artist_id)
     
     if genre_id:
         # Update Artist_Genres table.
@@ -185,23 +184,41 @@ def get_all_artists():
 
 def get_album_from_id_or_name(id=None,name=None):
     connection = connect()
+    query = """SELECT Albums.AlbumID, Albums.AlbumName, Albums.Price, Genres.GenreID, Artists.ArtistID,
+            Albums.ReleasedYear, Albums.CopiesInStock FROM
+            Albums INNER JOIN Album_Artists ON Albums.AlbumID = Album_Artists.AlbumID
+            INNER JOIN Artists ON Artists.ArtistID = Album_Artists.ArtistID
+            INNER JOIN Album_Genres ON Albums.AlbumID = Album_Genres.AlbumID
+            INNER JOIN Genres ON Album_Genres.GenreID = Genres.GenreID"""
     if id:
-        query = f"""SELECT Albums.AlbumID, Albums.AlbumName, Albums.Price, Genres.GenreID, Artists.ArtistID FROM
-            Albums INNER JOIN Album_Artists ON Albums.AlbumID = Album_Artists.AlbumID
-            INNER JOIN Artists ON Artists.ArtistID = Album_Artists.ArtistID
-            INNER JOIN Album_Genres ON Albums.AlbumID = Album_Genres.AlbumID
-            INNER JOIN Genres ON Album_Genres.GenreID = Genres.GenreID
-            WHERE Albums.AlbumID = {id}"""
+        query += f" WHERE Albums.AlbumID = {id}"
     else:
-        query = f"""SELECT Albums.AlbumID, Albums.AlbumName, Albums.Price, Genres.GenreID, Artists.ArtistID FROM
-            Albums INNER JOIN Album_Artists ON Albums.AlbumID = Album_Artists.AlbumID
-            INNER JOIN Artists ON Artists.ArtistID = Album_Artists.ArtistID
-            INNER JOIN Album_Genres ON Albums.AlbumID = Album_Genres.AlbumID
-            INNER JOIN Genres ON Album_Genres.GenreID = Genres.GenreID
-            WHERE Albums.AlbumName = '{name}'"""
-    album_info = execute_query(connection, query)
+        query += f" WHERE Albums.AlbumName = '{name}'"
+
+    try:
+        album_info = execute_query(connection, query)
+    except Exception:
+        album_info = ()
     connection.close()
     return album_info
+
+def update(tableName, fields, values, rowID):
+    query = f"UPDATE {tableName} set "
+    for i in range(len(fields)):
+        if i < len(fields) - 1:
+            query += f"{fields[i]} = '{values[i]}', "
+        else:
+            query += f"{fields[i]} = '{values[i]}' "
+    query += f" WHERE {tableName[:-1]}ID = {rowID}"
+    try:
+        connection = connect() 
+        execute_non_select_query(connection, query)
+        connection.close() 
+        return "success"
+    except Exception as e:
+        print(e)
+        return "fail"
+    
 
 
 

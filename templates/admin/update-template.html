@@ -3,6 +3,7 @@
     <section class="column is-half">
         <h1 class="is-size-3">Update Album</h1>
         <!-- search by album name? -->
+        <p id="album-error" class="has-text-danger"></p>
         <form class="flex flex-row" id="search-album">
                 <div class="field">
                     <label class="label" for="album-name">Album name:</label>
@@ -14,17 +15,18 @@
                 </div>
             <button class="button is-link">Search</button>
         </form>
-        <form>
+        <form id="update-album">
+            <input type="text" class="is-hidden" name="album-id" id="album-id" >
             <div class="field">
                 <label class="label" for="album-name">Album name:</label>
                 <div class="control">
-                    <input class="input" type="text" id="album-name" name="album-name">
+                    <input class="input" type="text" id="update-album-name" name="album-name">
                 </div>
             </div>
             <div class="field">
                 <label class="label" for="artist-name">Artist name:</label>
                 <div class="control">
-                    <select name="artist-name" id="artist-name">
+                    <select name="artist-name" id="update-artist-name">
                         {% for artist in artists %}
                             <option value={{ artist[0] }}>{{artist[1]}}</option>
                         {% endfor %}
@@ -41,13 +43,25 @@
             <div class="field">
                 <label class="genre" for="genre">Genre:</label>
                 <div class="control">
-                    <select class="select" name="genre">
+                    <select class="select" id="update-album-genre" name="update-album-genre">
                         {% for genre in genres %}
                             <option value={{ genre[0] }}>{{ genre[1] }}</option>
                         {% endfor %}
                     </select>
                 </div>
             </div>
+            <div class="field">
+                <label class="label" for="releasedYear">Year Released:</label>
+                <div class="control">
+                    <input class="input" type="number" id="year" name="year">
+                </div>
+            </div>    
+            <div class="field">
+                <label class="label" for="copies">Copies In Stock:</label>
+                <div class="control">
+                    <input class="input" type="number" id="copies" name="copies">
+                </div>
+            </div>  
             <button class="button is-primary">Update Album</button>
         </form>
     </section>
