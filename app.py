@@ -253,24 +253,49 @@ def admin_add_album():
     # Get POST request data'
     album_name = request.form['album-name']
     artist_name = request.form['artist-name']
+    second_artist_name = request.form['second-artist-name']
+    print(second_artist_name)
     price = request.form['price']
     copies_in_stock = request.form['copiesInStock']
     release_year = request.form['year']
     genre_name = request.form['genre']
     genre_id = get_genre_id_from_name(genre_name)
 
-    # Verify that artist exists.
-    artist_id = get_artist_id_from_name(artist_name)
-    print(artist_id)
-
-   # Add arist if does not exist.
-    if not artist_id:
-        add_artist(artist_name, genre_id)
+    # Process to add album with multiple artists.
+    if second_artist_name:
+        # Verify that artist exists.
         artist_id = get_artist_id_from_name(artist_name)
+
+        # Add arist if does not exist.
+        if not artist_id:
+            add_artist(artist_name, genre_id)
+            artist_id = get_artist_id_from_name(artist_name)
         
+         # Verify that second artist exists.
+        second_artist_id = get_artist_id_from_name(second_artist_name)
+
+        # Add second arist if does not exist.
+        if not second_artist_id:
+            add_artist(second_artist_name, genre_id)
+            second_artist_id = get_artist_id_from_name(artist_name)
+        
+        # Add album
+        add_album(album_name, artist_id, price, copies_in_stock, release_year, genre_id, second_artist_id)
     
-    # Add album
-    add_album(album_name, artist_id, price, copies_in_stock, release_year, genre_id)
+
+    # Process to add album with single artist.
+    else:
+        # Verify that artist exists.
+        artist_id = get_artist_id_from_name(artist_name)
+
+        # Add arist if does not exist.
+        if not artist_id:
+            add_artist(artist_name, genre_id)
+            artist_id = get_artist_id_from_name(artist_name)
+        
+        # Add album
+        add_album(album_name, artist_id, price, copies_in_stock, release_year, genre_id)
+    
     return redirect("/admin/add")
 
 

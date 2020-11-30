@@ -26,7 +26,7 @@ Albums = Model("Albums")
 
 
 # Table INSERTs
-def add_album(name, artist_id, price, copies_in_stock, year, genre_id):
+def add_album(name, artist_id, price, copies_in_stock, year, genre_id, second_artist_id = None):
     """ 
     Adds a new album to the DB with the given parametes.
     """
@@ -46,6 +46,12 @@ def add_album(name, artist_id, price, copies_in_stock, year, genre_id):
 
      # Insert new row into Album_Genres table.
     add_album_artists(album_id, artist_id)
+
+    # Insert second row into Album_Genres table if needed.
+    if second_artist_id:
+        add_album_artists(album_id, second_artist_id)
+        print("second "+str(second_artist_id))
+
 
 
 def add_artist(name, genre_id = None):
