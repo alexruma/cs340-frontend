@@ -28,13 +28,14 @@
             </div>
             <div class="field">
                 <label class="label" for="artist-name">Artist name:</label>
-                <div class="control">
+                <div class="control" id="add-artists">
                     <select name="artist-name" id="update-artist-name">
                         {% for artist in artists %}
                             <option value={{ artist[0] }}>{{artist[1]}}</option>
                         {% endfor %}
                     </select>
                 </div>
+                <span id="add-artist">+ add artist</span>
             </div>
             <div class="field">
                 <label class="label" for="price">Price:</label>
@@ -69,18 +70,19 @@
         </form>
     </section>
     <section class="column is-half mt-4">
+        <p id="genre-error" class="has-text-danger"></p>
         <h1>Update Genre</h1>
-        <form>
+        <form id="update-genre">
             <div class="field">
                 <label class="label">Old Genre Name</label>
                 <div class="control">
-                    <input type="text" name="old_genre" class="input" required />
+                    <input type="text" id="old-genre" name="old_genre" class="input" required />
                 </div>
             </div>
             <div class="field">
                 <label class="label">New Genre Name</label>
                 <div class="control">
-                    <input type="text" name="new_genre" class="input" required />
+                    <input type="text" id="new-genre" name="new_genre" class="input" required />
                 </div>
             </div>
             <button class="button is-primary">Update Genre</button>

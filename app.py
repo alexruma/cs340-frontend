@@ -390,7 +390,15 @@ def getAlbumDetails():
     albumID = data["albumID"]
     albumName = data["albumName"]
     album = get_album_from_id_or_name(id=albumID, name = albumName)
-    return jsonify(album)
+    genres = [album[0][3]]
+    artists = [album[0][4]]
+    if len(album) > 1:
+        for result in album:
+            if result[3] not in genres:
+                genres.append(result[3])
+            if result[4] not in artists:
+                artists.append(result[4])
+    return jsonify(album[0], artists, genres)
 
 @app.route("/api/updateAlbum", methods=["POST"])
 def updateAlbum():
@@ -413,6 +421,16 @@ def updateArtist():
     artistID = data["artistID"]
     artistName = data["artistName"]
     status = update("Artists", ["artistName"], [artistName], artistID)
+    return jsonify(status)
+
+@app.route("/api/updateGenre", methods=["POST"])
+def updateGenre():
+    data = request.get_json()
+    oldGenre = data["oldGenre"]
+    newGenre = data["newGenre"]
+    genreID = get_genre_id_from_name(oldGenre) 
+    status = update("Genres", ["genreName"], [newGenre], genreID)
+    print(status)
     return jsonify(status)
 
 if __name__ == "__main__":

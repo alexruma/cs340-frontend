@@ -17,10 +17,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
         const body = JSON.stringify({ albumID: updateAlbumID.value, albumName: updateAlbumName.value });
-        console.log(body);
         const request = await fetch("/api/getAlbumDetails", {method: "POST", headers, body });
         const data = await request.json();
+    
         if (data.length > 0) {
+            const genres = data[2];
+            const artists = data[1];
             const albumData = data[0]
             albumError.textContent = "";
             albumName.value = albumData[1];
@@ -30,6 +32,32 @@ document.addEventListener("DOMContentLoaded", () => {
             albumID.value = albumData[0];
             albumYear.value = albumData[5];
             CopiesInStock.value = albumData[6];
+            
+            // add extra genres 
+            if (genres.length > 1) {
+                const selectGenreParent = albumGenre.parentElement;
+                const selectGenreClone = albumGenre.cloneNode(true);
+                let count = 1;
+                for (let genre of genres.slice(1)) {
+                    selectGenreClone.id = `update-album-genre${count++}`;
+                    selectGenreClone.value = genre;
+                    selectGenreParent.appendChild(selectGenreClone);
+                }
+            }
+
+            // add extra artists 
+            if (artists.length > 1) {
+                const artistNameParent = artistName.parentNode;
+                const artistNameClone = artistName.cloneNode(true);
+                let count = 1;
+                for (let artist of artists.slice(1)) {
+                    artistNameClone.id = `update-artist-name${count++}`;
+                    artistNameClone.value = artist;
+                    artistNameParent.appendChild(artistNameClone)
+                }
+            }
+
+            // 
         } else {
             albumError.textContent = "album not found!"
         }
@@ -115,6 +143,35 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (e) {
             console.log(e);
             artistSearchError.textContent = "an error occurred";
+        }
+    });
+
+    // update genre 
+
+    const updateGenreForm = document.querySelector("#update-genre");
+    const oldGenre = document.querySelector("#old-genre");
+    const newGenre = document.querySelector("#new-genre");
+    const genreError = document.querySelector("#genre-error");
+
+    updateGenreForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        const body = JSON.stringify({ oldGenre: oldGenre.value, newGenre: newGenre.value });
+        try {
+            const request = await fetch("/api/updateGenre", { method: "POST", headers, body });
+            const status = await request.json();
+            console.log(status);
+            if (status === "fail") {
+                genreError.textContent = "genre not found or error occurred";
+            } else {
+                alert("genre update");
+                genreError.textContent = "";
+                updateGenreForm.reset();
+            }
+        } catch (e) {
+            console.error(e, "an error occurred");
+            genreError.textContent = "an error occurred";
         }
     });
 
