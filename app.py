@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template, request, session, redirect, jsonify, url_for
+from flask import Flask, render_template, request, session, redirect, jsonify, url_for, flash
 import requests
 from db.connection import connect, execute_query, insert_data, update_data
 from db.model import * 
@@ -237,7 +237,12 @@ def display_all_artists():
     # return redirect("/admin/search-results")
     return render_template('admin/search-template-results.html', artist_data = artist_data)
 
+# Admin display all Artist_Albums
+@app.route("/admin-album_artists-display-all", methods=["GET", "POST"])
+def display_all_album_artists():
+    table_data = get_all_album_artists()
 
+    return render_template('admin/search-template-results.html', data = table_data)
 
 ##ADMIN ADD PAGE ROUTING
 
@@ -301,19 +306,43 @@ def render_create_account():
 
 
 ##ADMIN DELETE ROUTING
+# Delete Album.
 @app.route("/delete-album", methods=["GET", "POST"])
 def admin_delete_album():
     album_id = request.form['delete-id']
     delete_album_by_id(album_id)
 
+    flash('Album ' + str(album_id) + ' Removed From Database')
     return redirect("/admin-album-display-all")
 
+# Delete Customer.
 @app.route("/delete-customer", methods=["GET", "POST"])
 def admin_delete_customer():
-    album_id = request.form['delete-id']
-    delete_customer_by_id(album_id)
+    customer_id = request.form['delete-id']
+    delete_customer_by_id(customer_id)
 
+    flash('Customer ' + str(customer_id) + ' Removed From Database')
     return redirect("/admin-customer-display-all")
+
+# Delete Artist.
+@app.route("/delete-artist", methods=["GET", "POST"])
+def admin_delete_artist():
+    artist_id = request.form['delete-id']
+
+    delete_artist_by_id(artist_id)
+    
+    flash('Artist ' + str(artist_id) + ' Removed From Database')
+    return redirect("/admin-artist-display-all")
+
+# Delete Album_Artists.
+@app.route("/delete-album-artists", methods=["GET", "POST"])
+def admin_delete_album_artists():
+    row_id = request.form['delete-id']
+
+    delete_album_artists_by_id(row_id)
+    
+    flash('Row ' + str(row_id) + ' Removed From Database')
+    return redirect("/admin-artist-display-all")
 
 
 @app.route("/login", methods=["GET", "POST"])

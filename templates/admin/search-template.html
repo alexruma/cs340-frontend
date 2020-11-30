@@ -1,49 +1,54 @@
 
-
+<h3>Customers</h3>
 <form id="admin-customer-search" action="/admin-customer-search" method="POST"> 
     <label class="label" for="customer-name-input">Customer Search by Name:</label>
     <input class="input" type="text" name="customer-name-input">
     <label class="label" for="customer-id-input">Customer Search by ID:</label>
     <input class="input" type="number" name="customer-id-input">
-    <input type="submit">
+    <input class="form-btn button is-primary" type="submit">
 </form>
 
 <form id="display-all-customers" action="/admin-customer-display-all" method="POST"> 
-    <label class="label" for="display-all">See All Customers:</label>
     <input class="input" type="hidden" name="display-all", value="display-all">
-    <input type="submit" value = "See All">
+    <input class="form-btn button is-primary" type="submit" value = "See All Customers">
 </form>
 <br>
 
+<h3>Albums</h3>
 <form id="admin-album-search" action="/admin-search" method="POST"> 
     <label class="label" for="album-name-input">Album Search by Name:</label>
     <input class="input" type="text" name="album-name-input">
     <label class="label" for="album-id-input">Album Search by ID:</label>
     <input class="input" type="number" name="album-id-input">
-    <input type="submit">
+    <input class="form-btn button is-primary" type="submit">
 </form>
 
 <form id="display-all-albums" action="/admin-album-display-all" method="POST">
-    <label class="label" for="display-all">See All Albums:</label>
     <input class="input" type="hidden" name="display-all", value="display-all">
-    <input type="submit" value = "See All">
+    <input class="form-btn button is-primary" type="submit" value = "See All Albums">
 </form>
 
 <br>
+
+<h3>Artists</h3>
 <!-- Artist Search Forms-->
 <form id="display-all-albums" action="/admin-artist-display-all" method="POST"> 
     <label class="label" for="displayt-all">See All Artists:</label>
     <input class="input" type="hidden" name="display-all", value="display-all">
-    <input type="submit" value = "See All">
+    <input class="form-btn button is-primary" type="submit" value = "See All Artists">
 </form>
-    <!-- Artist Results Display-->
-<div>
-    <div class="is-one-half">
-        {% for artist in artist_data %}
-        <h4 id="album-header">Album Details</h4>
-            <h4 ><span class="has-text-weight-bold">Artist ID: </span> {{ album[0] }}</h4>
-            <h4 ><span class="has-text-weight-bold">Artist: </span> {{ album[1] }}</h4>
-            <h4 ><span class="has-text-weight-bold">Genre </span> {{ album[2] }}</h4>
-        {% endfor %}
-    </div>
-</div>  
+
+<br>
+
+<h3>Album_Artists Table</h3>
+<!-- Album_Artists Search Forms-->
+<form id="display-all-albums" action="/admin-album_artists-display-all" method="POST"> 
+    <label class="label" for="displayt-all">See Album_Artists Table:</label>
+    <input class="input" type="hidden" name="display-all", value="display-all">
+    <input class="form-btn button is-primary" type="submit" value = "See Table">
+</form>
+
+
+
+
+
