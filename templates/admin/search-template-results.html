@@ -22,6 +22,7 @@
 </form>
 
 <form id="display-all-customers" action="/admin-customer-display-all" method="POST"> 
+    <label class="label" for="display-all">See All Customers:</label>
     <input class="input" type="hidden" name="display-all", value="display-all">
     <input type="submit" value = "See All">
 </form>
@@ -35,6 +36,10 @@
         <h4 ><span class="has-text-weight-bold">Customer Name: </span> {{ customer[1] + " " + customer[2] }}</h4>
         <h4 ><span class="has-text-weight-bold">Customer Email: </span> {{ customer[3] }}</h4>
         <h4 ><span class="has-text-weight-bold">Customer Favorite Genre: </span> {{ customer[4] }}</h4>
+        <form action = "/delete-customer"  method="POST">
+        <input class="input" type="hidden" name="delete-id" value = "{{ customer[0] }}"> 
+        <input type="submit" value ="Delete Customer">
+        </form>
         <br>
         {% endfor %}
     </div>
@@ -50,6 +55,7 @@
 </form>
 
 <form id="display-all-albums" action="/admin-album-display-all" method="POST"> 
+    <label class="label" for="display-all">See All Albums:</label>
     <input class="input" type="hidden" name="display-all", value="display-all">
     <input type="submit" value = "See All">
 </form>
@@ -65,6 +71,29 @@
             <h4 ><span class="has-text-weight-bold">Price: </span> ${{ album[2] / 100 }}</h4>
             <h4 ><span class="has-text-weight-bold">Release Year: </span> {{ album[5]}}</h4>
             <h4 ><span class="has-text-weight-bold">Copies in Stock: </span> {{ album[4]}}</h4>
+            <form action = "/delete-album"  method="POST">
+                <input class="input" type="hidden" name="delete-id" value = "{{ album[0] }}"> 
+                <input type="submit" value ="Delete Album">
+                </form>
+            <br>
+        {% endfor %}
+    </div>
+
+    <br>
+<!-- Artist Search Forms-->
+<form id="display-all-albums" action="/admin-artist-display-all" method="POST"> 
+    <label class="label" for="displayt-all">See All Artists:</label>
+    <input class="input" type="hidden" name="display-all", value="display-all">
+    <input type="submit" value = "See All">
+</form>
+    <!-- Artist Results Display-->
+<div>
+    <div class="is-one-half">
+        {% for artist in artist_data %}
+        <h4 id="album-header">Artist Details</h4>
+            <h4 ><span class="has-text-weight-bold">Artist ID: </span> {{ artist[1] }}</h4>
+            <h4 ><span class="has-text-weight-bold">Artist: </span> {{ artist[0] }}</h4>
+            <h4 ><span class="has-text-weight-bold">Genre </span> {{ artist[2] }}</h4>
             <br>
         {% endfor %}
     </div>

@@ -24,6 +24,7 @@ class Model:
 Genres = Model("Genres")
 Albums = Model("Albums")
 
+
 # Table INSERTs
 def add_album(name, artist_id, price, copies_in_stock, year, genre_id):
     """ 
@@ -106,6 +107,7 @@ def add_album_artists(album_id, artist_id):
     connection.close()
 
 
+# SELECT queries.
 def get_artist_id_from_name(name):
     """
     Takes the name of an artist as parameter and returns the ArtistID
@@ -115,7 +117,7 @@ def get_artist_id_from_name(name):
     artist_id = execute_query(connection, query)
     connection.close()
     
-    # Trim ID it it exists to return just int vlaue.
+    # Trim ID if it exists to return just int vlaue.
     if artist_id:
         artist_id = artist_id[0][0]
     
@@ -130,7 +132,7 @@ def get_album_id_from_name(name):
     album_id = execute_query(connection, query)
     connection.close()
     
-    # Trim ID it it exists to return just int vlaue.
+    # Trim ID if it exists to return just int vlaue.
     if album_id:
         album_id = album_id[0][0]
     
@@ -180,11 +182,43 @@ def get_all_artists():
     query = "SELECT ArtistID, ArtistName FROM Artists";
     genres = execute_query(connection, query)
     connection.close()
-    return genres 
+    return genres
+
+def get_all_artists_with_genre():
+    """
+    Returns all artist names and IDs along with genres associated with each artist, displayed in ascending order by artist name.
+    """
+    connection = connect() 
+    query = f"""SELECT Artists.ArtistName, Artists.ArtistID, Genres.GenreName FROM Artists
+        INNER JOIN Artist_Genres ON Artist_Genres.ArtistID = Artists.ArtistID
+        INNER JOIN Genres ON Genres.GenreID = Artist_Genres.GenreID
+        ORDER BY `Artists`.`ArtistName` ASC
+        """
+    artist_data = execute_query(connection, query)
+    connection.close()
+    print(artist_data)
+    return artist_data
+
+
+def get_customer_from_id_or_name(id=None,name=None):
+    connection = connect()
+    if id:
+      query =  f""" SELECT * FROM Customers WHERE CustomerId = '{id}'
+        """
+    else:
+        query = f""" SELECT * FROM Customers WHERE FirstName = '{name}' OR LastName = '{name}'
+        """
+
+    try:
+        customer_info = execute_query(connection, query)
+    except Exception:
+        customer_info = ()
+    connection.close()
+    return customer_info
 
 def get_album_from_id_or_name(id=None,name=None):
     connection = connect()
-    query = """SELECT Albums.AlbumID, Albums.AlbumName, Albums.Price, Genres.GenreID, Artists.ArtistID,
+    query = f"""SELECT Albums.AlbumID, Albums.AlbumName, Albums.Price, Genres.GenreID, Artists.ArtistID,
             Albums.ReleasedYear, Albums.CopiesInStock FROM
             Albums INNER JOIN Album_Artists ON Albums.AlbumID = Album_Artists.AlbumID
             INNER JOIN Artists ON Artists.ArtistID = Album_Artists.ArtistID
@@ -201,6 +235,27 @@ def get_album_from_id_or_name(id=None,name=None):
         album_info = ()
     connection.close()
     return album_info
+
+
+# DELETE queries.
+
+def delete_album_by_id(id):
+    """ Deletes album with specified ID from Albums table, Album_Artists table and Album_Genres table."""
+    connection = connect()
+    
+    # Delete from Albums table.
+    query = f"""DELETE FROM Albums WHERE Albums.AlbumID = {id}"""
+    execute_non_select_query(connection, query)
+
+    # Delete from Album_Artists.
+    query = f"""DELETE FROM Album_Artists WHERE Album_Artists.AlbumID = {id}"""
+    execute_non_select_query(connection, query)
+
+    # Delete from Album_Genres.
+    query = f"""DELETE FROM Album_Genres WHERE Album_Genres.AlbumID = {id}"""
+    execute_non_select_query(connection, query)
+
+    connection.close()
 
 def update(tableName, fields, values, rowID):
     query = f"UPDATE {tableName} set "

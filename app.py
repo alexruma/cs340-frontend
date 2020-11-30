@@ -170,23 +170,14 @@ def display_customer_search_results():
    
     customer_name = request.form["customer-name-input"]
     customer_id = request.form["customer-id-input"]
-    print(customer_name)
+    
     # Search by customer name.
     if customer_name:
-        connection = connect()
-        query = f""" SELECT * FROM Customers WHERE FirstName = '{customer_name}' OR LastName = '{customer_name}'
-        """
-        customer_data = execute_query(connection, query)
-        connection.close()
+       customer_data = get_customer_from_id_or_name(None, customer_name)
     
     # Search by customer ID.
     else:
-        connection = connect()
-        query = f""" SELECT * FROM Customers WHERE CustomerId = '{customer_id}'
-        """
-        customer_data = execute_query(connection, query)
-        connection.close()
-        print(customer_data)
+        customer_data = get_customer_from_id_or_name(customer_id)
     
     return render_template('admin/search-template-results.html', album_data = [], customer_data = customer_data)
 
@@ -212,25 +203,11 @@ def display_search_results():
     
     # Search by album name.
     if album_name:
-        connection = connect() 
-        query = f"""SELECT Albums.AlbumID, Albums.AlbumName, Albums.Price, Artists.ArtistName, Albums.CopiesInStock, Albums.ReleasedYear FROM Albums 
-        INNER JOIN Album_Artists ON Albums.AlbumID = Album_Artists.AlbumID
-        INNER JOIN Artists ON Album_Artists.ArtistID = Artists.ArtistID
-        WHERE Albums.AlbumName = '{album_name}'
-        """
-        album_data = execute_query(connection, query)
-        connection.close()
+        album_data = get_album_from_id_or_name(None,album_name)
     
     # Search by ID.
     else: 
-        connection = connect() 
-        query = f"""SELECT Albums.AlbumID, Albums.AlbumName, Albums.Price, Artists.ArtistName,Albums.CopiesInStock, Albums.ReleasedYear FROM Albums 
-        INNER JOIN Album_Artists ON Albums.AlbumID = Album_Artists.AlbumID
-        INNER JOIN Artists ON Album_Artists.ArtistID = Artists.ArtistID
-        WHERE Albums.AlbumID = '{album_id}'
-        """
-        album_data = execute_query(connection, query)
-        connection.close()
+       album_data = get_album_from_id_or_name(album_id)
 
     #return redirect("/admin/search-results")
     return render_template('admin/search-template-results.html', album_data = album_data)
@@ -249,6 +226,17 @@ def display_all_albums():
     
     # return redirect("/admin/search-results")
     return render_template('admin/search-template-results.html', album_data = album_data)
+
+
+# Admin display all artists.
+@app.route("/admin-artist-display-all", methods=["GET", "POST"])
+def display_all_artists():
+
+    artist_data = get_all_artists_with_genre()
+    
+    # return redirect("/admin/search-results")
+    return render_template('admin/search-template-results.html', artist_data = artist_data)
+
 
 
 ##ADMIN ADD PAGE ROUTING
@@ -310,6 +298,16 @@ def render_create_account():
         genres = execute_query(connection, query)
         connection.close()
         return render_template("create-account.html", context={"genres": genres})
+
+
+##ADMIN DELETE ROUTING
+@app.route("/delete-album", methods=["GET", "POST"])
+def admin_delete_album():
+    album_id = request.form['delete-id']
+    delete_album_by_id(album_id)
+
+    return redirect("/admin-album-display-all")
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
