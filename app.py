@@ -308,6 +308,13 @@ def admin_delete_album():
 
     return redirect("/admin-album-display-all")
 
+@app.route("/delete-customer", methods=["GET", "POST"])
+def admin_delete_customer():
+    album_id = request.form['delete-id']
+    delete_customer_by_id(album_id)
+
+    return redirect("/admin-customer-display-all")
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
