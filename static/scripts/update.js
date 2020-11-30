@@ -11,6 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const albumGenre = document.querySelector("#update-album-genre");
     const albumYear = document.querySelector("#year");
     const CopiesInStock = document.querySelector("#copies");
+    const addArtist = document.querySelector("#add-artist");
+    const deleteArtist = document.querySelector("#delete-artist");
+    const addGenre = document.querySelector("#add-genre");
+    const deleteGenre = document.querySelector("#delete-genre");
 
     searchAlbumForm.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -35,6 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // add extra genres 
             if (genres.length > 1) {
+                deleteGenre.className = "";
                 const selectGenreParent = albumGenre.parentElement;
                 const selectGenreClone = albumGenre.cloneNode(true);
                 let count = 1;
@@ -47,6 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // add extra artists 
             if (artists.length > 1) {
+                deleteArtist.className = "";
                 const artistNameParent = artistName.parentNode;
                 const artistNameClone = artistName.cloneNode(true);
                 let count = 1;
