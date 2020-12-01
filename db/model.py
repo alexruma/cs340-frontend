@@ -274,6 +274,16 @@ def get_all_album_artists():
      
      return table_info
 
+
+def get_all_album_genres():
+     connection = connect()
+     
+     query = f""" SELECT * FROM Album_Genres"""
+     table_info = execute_query(connection, query)
+     
+     connection.close()
+     
+     return table_info
     
 
 
@@ -297,6 +307,7 @@ def delete_album_by_id(id):
 
     connection.close()
 
+
 def delete_customer_by_id(id):
     """ Deletescustomer with specified ID from Customers table."""
     connection = connect()
@@ -304,6 +315,7 @@ def delete_customer_by_id(id):
     # Delete from Albums table.
     query = f"""DELETE FROM Customers WHERE Customers.CustomerID = {id}"""
     execute_non_select_query(connection, query)
+
 
 def delete_artist_by_id(id):
     """ Deletes artist with specified ID from Artists table, Album_Artists table and Artist_Genres table."""
@@ -323,11 +335,22 @@ def delete_artist_by_id(id):
 
     connection.close()
 
+
 def delete_album_artists_by_id(id):
     """ Deletes Album_Artists row with specified row ID."""
     connection = connect()
     
     query = f"""DELETE FROM Album_Artists WHERE Album_Artists.RowID = {id}"""
+    execute_non_select_query(connection, query)
+
+    connection.close()
+
+
+def delete_album_genres_by_id(id):
+    """ Deletes Album_Genres row with specified row ID."""
+    connection = connect()
+    
+    query = f"""DELETE FROM Album_Artists WHERE Album_Genres.RowID = {id}"""
     execute_non_select_query(connection, query)
 
     connection.close()

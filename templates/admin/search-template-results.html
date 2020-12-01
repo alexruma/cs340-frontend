@@ -150,4 +150,40 @@
         </table>
     </div>
 </div>  
+
+<h3>Album_Genres Table</h3>
+<!-- Album_Genres Search Forms-->
+<form id="display-all-albums" action="/admin-album_genres-display-all" method="POST"> 
+    <label class="label" for="display-all">See Album_Artists Table:</label>
+    <input class="input" type="hidden" name="display-all", value="display-all">
+    <input class="form-btn button is-primary" type="submit" value = "See Table">
+</form>
+
+  <!-- Album_Genres Results Display-->
+  <div>
+    <div class="is-one-half">
+        <table>
+            <tr>
+                <th>Row ID</th>
+                <th>Album ID</th>
+                <th>Genre ID</th>
+                <th>Delete Row</th>
+              </tr>
+        {% for datum in album_genres_data %}
+        <tr>
+            <td>{{ datum[0] }}</td>
+            <td>{{ datum[1] }}</td>
+            <td>{{ datum[2] }}</td>
+            <td><form action = "/delete-album-artists"  method="POST">
+                <input class="input" type="hidden" name="delete-id" value = "{{ datum[0] }}"> 
+                <input class="button" type="submit" value ="Delete">
+                </form></td>
+          </tr>
+        
+        {% endfor %}
+        </table>
+    </div>
+</div>  
+
+
 {% endblock %}

@@ -181,6 +181,7 @@ def display_customer_search_results():
     
     return render_template('admin/search-template-results.html', album_data = [], customer_data = customer_data)
 
+
 # Admin display all customers.
 @app.route("/admin-customer-display-all", methods=["GET", "POST"])
 def display_all_customers():
@@ -191,6 +192,7 @@ def display_all_customers():
     connection.close()
 
     return render_template('admin/search-template-results.html', album_data = [], customer_data = customer_data)
+
 
 # Adimn search for albums by name or ID.
 @app.route("/admin-search", methods=["GET", "POST"])
@@ -211,6 +213,7 @@ def display_search_results():
 
     #return redirect("/admin/search-results")
     return render_template('admin/search-template-results.html', album_data = album_data)
+
 
 # Admin display all albums.
 @app.route("/admin-album-display-all", methods=["GET", "POST"])
@@ -237,12 +240,22 @@ def display_all_artists():
     # return redirect("/admin/search-results")
     return render_template('admin/search-template-results.html', artist_data = artist_data)
 
+
 # Admin display all Artist_Albums
 @app.route("/admin-album_artists-display-all", methods=["GET", "POST"])
 def display_all_album_artists():
     table_data = get_all_album_artists()
 
     return render_template('admin/search-template-results.html', data = table_data)
+
+
+# Admin display all Album_Genres
+@app.route("/admin-album_genres-display-all", methods=["GET", "POST"])
+def display_all_album_genres():
+    album_genres_data = get_all_album_genres()
+
+    return render_template('admin/search-template-results.html', album_genres_data =  album_genres_data)
+
 
 ##ADMIN ADD PAGE ROUTING
 
@@ -340,6 +353,7 @@ def admin_delete_album():
     flash('Album ' + str(album_id) + ' Removed From Database')
     return redirect("/admin-album-display-all")
 
+
 # Delete Customer.
 @app.route("/delete-customer", methods=["GET", "POST"])
 def admin_delete_customer():
@@ -348,6 +362,7 @@ def admin_delete_customer():
 
     flash('Customer ' + str(customer_id) + ' Removed From Database')
     return redirect("/admin-customer-display-all")
+
 
 # Delete Artist.
 @app.route("/delete-artist", methods=["GET", "POST"])
@@ -359,12 +374,23 @@ def admin_delete_artist():
     flash('Artist ' + str(artist_id) + ' Removed From Database')
     return redirect("/admin-artist-display-all")
 
+
 # Delete Album_Artists.
 @app.route("/delete-album-artists", methods=["GET", "POST"])
 def admin_delete_album_artists():
     row_id = request.form['delete-id']
 
     delete_album_artists_by_id(row_id)
+    
+    flash('Row ' + str(row_id) + ' Removed From Database')
+    return redirect("/admin-artist-display-all")
+
+# Delete Album_Genres.
+@app.route("/delete-album-genres", methods=["GET", "POST"])
+def admin_delete_album_genres():
+    row_id = request.form['delete-id']
+
+    delete_album_genres_by_id(row_id)
     
     flash('Row ' + str(row_id) + ' Removed From Database')
     return redirect("/admin-artist-display-all")
