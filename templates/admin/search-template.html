@@ -43,7 +43,15 @@
 <h3>Album_Artists Table</h3>
 <!-- Album_Artists Search Forms-->
 <form id="display-all-albums" action="/admin-album_artists-display-all" method="POST"> 
-    <label class="label" for="displayt-all">See Album_Artists Table:</label>
+    <label class="label" for="display-all">See Album_Artists Table:</label>
+    <input class="input" type="hidden" name="display-all", value="display-all">
+    <input class="form-btn button is-primary" type="submit" value = "See Table">
+</form>
+
+<h3>Album_Genres Table</h3>
+<!-- Album_Genres Search Forms-->
+<form id="display-all-albums" action="/admin-album_genres-display-all" method="POST"> 
+    <label class="label" for="display-all">See Album_Artists Table:</label>
     <input class="input" type="hidden" name="display-all", value="display-all">
     <input class="form-btn button is-primary" type="submit" value = "See Table">
 </form>
