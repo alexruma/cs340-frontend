@@ -267,13 +267,13 @@ def admin_add_album():
     album_name = request.form['album-name']
     artist_name = request.form['artist-name']
     second_artist_name = request.form['second-artist-name']
-    print(second_artist_name)
     price = request.form['price']
     copies_in_stock = request.form['copiesInStock']
     release_year = request.form['year']
-    genre_name = request.form['genre']
-    genre_id = get_genre_id_from_name(genre_name)
-
+    genre_id = request.form['genre']
+    second_genre_id = request.form['second-genre']
+    print(second_genre_id)
+   
     # Process to add album with multiple artists.
     if second_artist_name:
         # Verify that artist exists.
@@ -293,7 +293,7 @@ def admin_add_album():
             second_artist_id = get_artist_id_from_name(artist_name)
         
         # Add album
-        add_album(album_name, artist_id, price, copies_in_stock, release_year, genre_id, second_artist_id)
+        add_album(album_name, artist_id, price, copies_in_stock, release_year, genre_id, second_artist_id, second_genre_id)
     
 
     # Process to add album with single artist.
@@ -307,7 +307,7 @@ def admin_add_album():
             artist_id = get_artist_id_from_name(artist_name)
         
         # Add album
-        add_album(album_name, artist_id, price, copies_in_stock, release_year, genre_id)
+        add_album(album_name, artist_id, price, copies_in_stock, release_year, genre_id, None, second_genre_id)
     
     return redirect("/admin/add")
 

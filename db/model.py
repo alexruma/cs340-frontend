@@ -26,12 +26,11 @@ Albums = Model("Albums")
 
 
 # Table INSERTs
-def add_album(name, artist_id, price, copies_in_stock, year, genre_id, second_artist_id = None):
+def add_album(name, artist_id, price, copies_in_stock, year, genre_id, second_artist_id = None, second_genre_id = None):
     """ 
     Adds a new album to the DB with the given parametes.
     """
     connection = connect()
-
     # Insert album into Albums table.
     query = f"""INSERT INTO Albums (AlbumName, Price, ReleasedYear, CopiesInStock)
     VALUES ('{name}', '{price}', '{year}', '{copies_in_stock}')"""
@@ -44,10 +43,14 @@ def add_album(name, artist_id, price, copies_in_stock, year, genre_id, second_ar
     # Insert new row into Album_Genres table.
     add_album_genres(album_id, genre_id)
 
-     # Insert new row into Album_Genres table.
+    # Insert second row into Album_Genres table if needed.
+    if second_genre_id:
+         add_album_genres(album_id, second_genre_id)
+
+     # Insert new row into Album_Artists table.
     add_album_artists(album_id, artist_id)
 
-    # Insert second row into Album_Genres table if needed.
+    # Insert second row into Album_Artists table if needed.
     if second_artist_id:
         add_album_artists(album_id, second_artist_id)
         print("second "+str(second_artist_id))
