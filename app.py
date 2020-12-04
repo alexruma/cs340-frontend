@@ -38,7 +38,6 @@ def index():
                 INNER JOIN Artists ON Album_Artists.ArtistID = Artists.ArtistID
                 WHERE Genres.GenreID = {first_genre_id}"""
     albums = execute_query(connection, albums_query)
-    print(albums)
     connection.close()
 
     return render_template('index.html', 
@@ -79,8 +78,8 @@ def render_account():
         "orders": orders 
     })
 
-@app.route('/album', methods=["GET"])
-def render_album():
+@app.route('/album/<int:id>', methods=["GET"])
+def render_album(id):
    # album_name = request.args.
     connection = connect() 
     query = f"""SELECT Albums.AlbumID, Albums.AlbumName, Albums.Price, Artists.ArtistName FROM Albums 
@@ -88,7 +87,13 @@ def render_album():
     INNER JOIN Artists ON Album_Artists.ArtistID = Artists.ArtistID
     WHERE Albums.AlbumID = {id}
     """
-    album_data = execute_query(connection, query)[0]
+    album_data = execute_query(connection, query)
+
+    # return a 404 if an album wasn't found 
+    if not album_data:
+        return render_template("404-template.html")
+    
+    album_data = album_data[0]
 
     query = f"""SELECT Genres.GenreName FROM Genres INNER JOIN Album_Genres ON Genres.GenreID = Album_Genres.GenreID
     INNER JOIN Albums ON Album_Genres.AlbumID = Albums.AlbumID 

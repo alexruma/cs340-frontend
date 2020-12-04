@@ -32,10 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
       // put album img src into image and title into p
 
       const div = document.createElement("div");
-      div.setAttribute("style", "height: 250px");
-      div.classList = ["column", "is-one-fifth", "has-text-centered", "is-vcentered"]
+      div.id = "album-thumbnail";
+      div.className = "column is-one-fifth has-text-centered is-vcentered";
       const img = document.createElement("img");
-      img.className = "mt-6";
+      img.className = "mt-1";
       img.setAttribute("src", `static/images/${albumName}.jpg`)
       const p = document.createElement("p");
       p.textContent = albumName;

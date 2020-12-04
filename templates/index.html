@@ -55,8 +55,8 @@
                 <div id="albums" class="columns is-flex-wrap-wrap albums">
                     {% if context %}
                         {% for album in context["albums"] %}
-                            <div style="height: 250px" class="column is-one-fifth box has-text-centered is-vcentered">
-                                <img class="mt-6" src="static/images/{{album[1]}}.jpg" alt="album artwork for {{ album[1]}}"/>
+                            <div id="album-thumbnail" class="column is-one-fifth has-text-centered is-vcentered">
+                                <img class="mt-1" src="static/images/{{album[1]}}.jpg" alt="album artwork for {{ album[1]}}"/>
                                 <p>{{ album[1]}}</p>
                             </div>
                         {% endfor %}
@@ -75,9 +75,10 @@
         </section>
     </div>
 
-    <script>
+    <!-- <script>
         setTimeout(function(){ alert("In order to access the Admin page and most databse INSERT/UPDATE/DELETE/SELECT features, please go to the login page and log in with the username 'admin' (no password). Then navigate to the Admin page"); 
     }, 1300);
         
-    </script>
+    </script> 
+    -->
 {% endblock %}

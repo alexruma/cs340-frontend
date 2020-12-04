@@ -1,10 +1,18 @@
 
-.albums > div { 
+#album-thumbnail { 
     width: 200px;
-    height: 200px;
+    min-height: 250px;
+    max-height: 250px;
     border-radius: 2%;
-    background-color: black;
+    border: 1px solid black;
+    box-shadow: 1px 2px 1px black;
     margin: 10px;
+}
+
+#album-thubmnail p {
+    max-width: 50px;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .message-text{
