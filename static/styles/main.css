@@ -27,3 +27,10 @@ th{
     font-size: medium;
     padding: 1%;
 }
+
+.entity-div{
+    border: solid gray;
+    border-radius: 1.2%;
+    padding: 1.2%;
+    margin: 1.2%;
+}

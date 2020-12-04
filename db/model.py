@@ -44,8 +44,8 @@ def add_album(name, artist_id, price, copies_in_stock, year, genre_id, second_ar
     add_album_genres(album_id, genre_id)
 
     # Insert second row into Album_Genres table if needed.
-    if second_genre_id:
-         add_album_genres(album_id, second_genre_id)
+    if second_genre_id and second_genre_id != "None":
+        add_album_genres(album_id, second_genre_id)
 
      # Insert new row into Album_Artists table.
     add_album_artists(album_id, artist_id)
@@ -59,7 +59,7 @@ def add_album(name, artist_id, price, copies_in_stock, year, genre_id, second_ar
 
 def add_artist(name, genre_id = None):
     """ 
-    Adds a new artist to the DB with the given name.
+    Adds a new artist to the DB with the given name, and if genre is provided, will also add row to Artist_Genres table.
     """
    
     connection = connect()
@@ -77,6 +77,18 @@ def add_artist(name, genre_id = None):
         # Update Artist_Genres table.
         add_artist_genres(artist_id, genre_id)
         print("done")
+
+
+def add_track(name, length, album_id):
+    """Adds a new track to DB."""
+
+    connection = connect()
+    
+    query = f"""INSERT INTO Tracks (TrackName, TrackLength, AlbumID)
+    VALUES ('{name}', '{length}', '{album_id}')"""
+
+    execute_non_select_query(connection, query)
+    connection.close()
 
 
 # M:M table INSERTs.
@@ -163,7 +175,7 @@ def get_genre_id_from_name(name):
     Takes the name of an genre as parameter and returns the GenreID.
     """
     connection = connect()
-    query = f""" SELECT Genres.GenreID FROM Genres WHERE Genres.GenreName = '{name}'"""
+    query = f""" SELECT Genres.GenreID FROM Genres WHERE Genres.GenreName '{name}'"""
    
     # Execute query and get int value of ID.
     genre_id = execute_query(connection, query)[0][0]
@@ -203,12 +215,25 @@ def get_all_artists():
     returns list of tuple with artist name and id 
     """
     connection = connect() 
-    query = "SELECT ArtistID, ArtistName FROM Artists";
-    genres = execute_query(connection, query)
+    query = "SELECT ArtistID, ArtistName FROM Artists"
+    artists = execute_query(connection, query)
     
     connection.close()
     
-    return genres
+    return artists
+
+def get_all_albums():
+    """
+    returns list of tuple with album name and id.
+    """
+    
+    connection = connect() 
+    query = "SELECT AlbumID, AlbumName FROM Albums"
+    albums = execute_query(connection, query)
+    
+    connection.close()
+    
+    return albums
 
 def get_all_artists_with_genre():
     """
@@ -233,7 +258,7 @@ def get_customer_from_id_or_name(id=None,name=None):
       query =  f""" SELECT * FROM Customers WHERE CustomerId = '{id}'
         """
     else:
-        query = f""" SELECT * FROM Customers WHERE FirstName = '{name}' OR LastName = '{name}'
+        query = f""" SELECT * FROM Customers WHERE FirstName LIKE '{name}%' OR LastName LIKE '%{name}%'
         """
 
     try:
@@ -256,7 +281,7 @@ def get_album_from_id_or_name(id=None,name=None):
     if id:
         query += f" WHERE Albums.AlbumID = {id}"
     else:
-        query += f" WHERE Albums.AlbumName = '{name}'"
+        query += f" WHERE Albums.AlbumName LIKE '%{name}%'"
 
     try:
         album_info = execute_query(connection, query)

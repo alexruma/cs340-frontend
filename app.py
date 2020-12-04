@@ -59,7 +59,7 @@ def render_account():
     # get user info to display, user favGenreID to get genre name 
     query = f"""select firstName, lastName, email, GenreName from Customers
                 INNER JOIN Genres ON Customers.favGenre = Genres.GenreID
-                where CustomerID = {user_id} """
+                where Customers.CustomerID = {user_id} """
     user = execute_query(connection, query)
     firstName, lastName, email, favGenre = user[0]
   
@@ -156,8 +156,9 @@ def render_admin_add(view):
     
     artists = get_all_artists()
     genres = get_all_genres()
+    albums = get_all_albums()
     
-    return render_template('admin.html', view=view, artists=artists, genres=genres)
+    return render_template('admin.html', view = view, artists = artists, genres = genres, albums = albums)
 
 
 ##SEARCH PAGE ROUTING 
@@ -272,7 +273,6 @@ def admin_add_album():
     release_year = request.form['year']
     genre_id = request.form['genre']
     second_genre_id = request.form['second-genre']
-    print(second_genre_id)
    
     # Process to add album with multiple artists.
     if second_artist_name:
@@ -316,8 +316,23 @@ def admin_add_album():
 @app.route("/add-artist", methods = ["POST"])
 def admin_add_artist():
     artist_name = request.form['artist-name']
+    
     add_artist(artist_name)
+    
     return redirect("/admin/add")
+
+
+# Add track to DB.
+@app.route("/add-track", methods = ["POST"])
+def admin_add_track():
+    track_name = request.form['track-name']
+    length = request.form['track-length']
+    album_id = request.form['album-id']
+    
+    add_track(track_name, length, album_id)
+    
+    return redirect("/admin/add")
+
 
 @app.route("/create-account", methods=["GET", "POST"])
 def render_create_account():
@@ -383,7 +398,7 @@ def admin_delete_album_artists():
     delete_album_artists_by_id(row_id)
     
     flash('Row ' + str(row_id) + ' Removed From Database')
-    return redirect("/admin-artist-display-all")
+    return redirect("/admin-album_artist-display-all")
 
 # Delete Album_Genres.
 @app.route("/delete-album-genres", methods=["GET", "POST"])
@@ -393,7 +408,7 @@ def admin_delete_album_genres():
     delete_album_genres_by_id(row_id)
     
     flash('Row ' + str(row_id) + ' Removed From Database')
-    return redirect("/admin-artist-display-all")
+    return redirect("/admin-album_genres-display-all")
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -409,7 +424,7 @@ def login():
             # attempt to get user from the database 
             connection = connect()
             email = request.form["email"]
-            query = f"select * from customers where email = '{email}'"
+            query = f"select * from Customers where email = '{email}'"
             user = execute_query(connection, query)
             connection.close()
 

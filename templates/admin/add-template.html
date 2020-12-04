@@ -1,9 +1,11 @@
- <div class="columns is-centered">
-    <div class="column is-half">
+ <!-- <div class="columns is-centered"> -->
+<div>
+    <div class="column">
         <h1 class="is-size-3">Add Album To Library </h1>
         {{message}}
 
         <!-- add album form-->
+        <div class="entity-div">
         <form action = "/add-album", method = "POST">
             <div class="field">
                 <label class="label" for="album-name">Album Name:</label>
@@ -14,13 +16,23 @@
             <div class="field">
                 <label class="label" for="artist-name">Artist Name:</label>
                 <div class="control">
-                    <input class="input" type="text" id="artist-name" name="artist-name">
+                    <input class="input" type="text" id="artist-name" name="artist-name" list="artist-list">
+                    <datalist id="artist-list">
+                        {% for artist in artists %}
+                        <option value="{{artist[1]}}">{{artist[1]}}</option>    
+                        {% endfor %}
+                    </datalist>
                 </div>
             </div>
             <div class="field">
                 <label class="label" for="artist-name">Second Artist Name (Optional):</label>
                 <div class="control">
-                    <input class="input" type="text" id="second-artist-name" name="second-artist-name">
+                    <input class="input" type="text" id="second-artist-name" name="second-artist-name" list ="artist-list">
+                    <datalist id="artist-list">
+                        {% for artist in artists %}
+                        <option value="{{artist[1]}}">{{artist[1]}}</option>    
+                        {% endfor %}
+                    </datalist>
                 </div>
             </div>
             <div class="field">
@@ -57,6 +69,7 @@
                 <label class="label" for="second-genre">Second Genre (optional):</label>
                 <div class="select mb-4">
                     <select name="second-genre">
+                        <option value="{{None}}">None</option>  
                         {% for genre in genres %}
                         <option value="{{genre[0]}}">{{genre[1]}}</option>    
                         {% endfor %}
@@ -77,10 +90,14 @@
                 <button class="button is-primary">Add Genre</button>
             </form>
         </section>
+        </div>
+
 
         <!-- Add Artist-->
+        
         <section class="mt-4">
             <h1 class="is-size-3">Add an Artist</h1>
+            <div class="entity-div">
             <form action = "/add-artist", method = "POST">
                 <div class="field">
                     <label class="label" for="genre">Artist</label>
@@ -91,8 +108,12 @@
                 <button class="button is-primary">Add Artist</button>
             </form>
         </section>
+        </div>
+
+        <!-- Add track-->
         <section class="mt-4">
             <h1 class="is-size-3">Add Track</h1>
+            <div class="entity-div">
             <form>
                 <div class="field">
                     <label class="label" for="track-name">Track</label>
@@ -108,12 +129,18 @@
                 </div>
                 <div class="field">
                     <label class="label" for="track-name">Album Name</label>
-                    <div class="control">
-                        <input class="input" type="text" name="album-name" placeholder="album name" />
+                    <div class="select mb-4">
+                        <select  name="album-id" placeholder="album name" >
+                        {% for album in albums %}
+                        <option value="{{album[0]}}">{{album[1]}}</option>    
+                        {% endfor %}
+                        </select>
                     </div>
                 </div>
                 <button class="button is-primary">Add Track</button>
             </form>
+            </div>
         </section>
+        
     </div>
 </div>

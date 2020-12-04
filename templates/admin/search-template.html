@@ -1,4 +1,4 @@
-
+<div class='entity-div'>
 <h3>Customers</h3>
 <form id="admin-customer-search" action="/admin-customer-search" method="POST"> 
     <label class="label" for="customer-name-input">Customer Search by Name:</label>
@@ -13,7 +13,9 @@
     <input class="form-btn button is-primary" type="submit" value = "See All Customers">
 </form>
 <br>
+</div>
 
+<div class='entity-div'>
 <h3>Albums</h3>
 <form id="admin-album-search" action="/admin-search" method="POST"> 
     <label class="label" for="album-name-input">Album Search by Name:</label>
@@ -29,7 +31,9 @@
 </form>
 
 <br>
+</div>
 
+<div class='entity-div'>
 <h3>Artists</h3>
 <!-- Artist Search Forms-->
 <form id="display-all-albums" action="/admin-artist-display-all" method="POST"> 
@@ -37,9 +41,11 @@
     <input class="input" type="hidden" name="display-all", value="display-all">
     <input class="form-btn button is-primary" type="submit" value = "See All Artists">
 </form>
-
+</div>
 <br>
 
+
+<div class='entity-div'>
 <h3>Album_Artists Table</h3>
 <!-- Album_Artists Search Forms-->
 <form id="display-all-albums" action="/admin-album_artists-display-all" method="POST"> 
@@ -47,7 +53,9 @@
     <input class="input" type="hidden" name="display-all", value="display-all">
     <input class="form-btn button is-primary" type="submit" value = "See Table">
 </form>
+</div>
 
+<div class='entity-div'>
 <h3>Album_Genres Table</h3>
 <!-- Album_Genres Search Forms-->
 <form id="display-all-albums" action="/admin-album_genres-display-all" method="POST"> 
@@ -55,7 +63,7 @@
     <input class="input" type="hidden" name="display-all", value="display-all">
     <input class="form-btn button is-primary" type="submit" value = "See Table">
 </form>
-
+</div>
 
 
 

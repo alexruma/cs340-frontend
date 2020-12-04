@@ -26,6 +26,7 @@
     {% endif %}
   {% endwith %}
  
+  <div class='entity-div'>
 <h3>Customers</h3>
 <!-- Customer Search Forms-->
 <form id="admin-customer-search" action="/admin-customer-search" method="POST"> 
@@ -40,7 +41,7 @@
     <input class="input" type="hidden" name="display-all", value="display-all">
     <input class="form-btn button is-primary" type="submit" value = "See All Customers">
 </form>
-<br>
+
 
 <!-- Customer Result Display-->
 <div>
@@ -58,7 +59,9 @@
         {% endfor %}
     </div>
 </div>
+</div>
 
+<div class='entity-div'>
 <h3>Albums</h3>
 <!-- Album Search Forms-->
 <form id="admin-album-search" action="/admin-search" method="POST"> 
@@ -92,8 +95,11 @@
             <br>
         {% endfor %}
             </div>
-    <br>
+  
+</div>
+</div>
 
+<div class='entity-div'>
 <h3>Artists</h3>
 <!-- Artist Search Forms-->
 <form id="display-all-albums" action="/admin-artist-display-all" method="POST"> 
@@ -117,7 +123,9 @@
         {% endfor %}
     </div>
 </div>
+</div>
 
+<div class='entity-div'>
 <h3>Album_Artists Table</h3>
 <!-- Artist_Album Search Forms-->
 <form id="display-all-albums" action="/admin-album_artists-display-all" method="POST"> 
@@ -149,8 +157,10 @@
         {% endfor %}
         </table>
     </div>
-</div>  
+</div>
+</div> 
 
+<div class='entity-div'>
 <h3>Album_Genres Table</h3>
 <!-- Album_Genres Search Forms-->
 <form id="display-all-albums" action="/admin-album_genres-display-all" method="POST"> 
@@ -183,7 +193,8 @@
         {% endfor %}
         </table>
     </div>
-</div>  
+</div>
+</div>
 
 
 {% endblock %}
