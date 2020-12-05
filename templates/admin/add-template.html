@@ -78,19 +78,22 @@
             </div>
             <button class="button is-primary">Add Album</button>
         </form>
+        </div>
+
         <section class="mt-4">
             <h1 class="is-size-3">Add a Genre</h1>
-            <form>
-                <div class="field">
-                    <label class="label" for="genre">Genre Name</label>
-                    <div class="control">
-                        <input class="input" type="text" name="genre" placeholder="genre name" />
+            <div class="entity-div">
+                <form method="POST" action="/add-genre">
+                    <div class="field">
+                        <label class="label" for="genre">Genre Name</label>
+                        <div class="control">
+                            <input class="input" type="text" name="genre-name" placeholder="genre name" />
+                        </div>
                     </div>
-                </div>
-                <button class="button is-primary">Add Genre</button>
-            </form>
+                    <button class="button is-primary">Add Genre</button>
+                </form>
+            </div>
         </section>
-        </div>
 
 
         <!-- Add Artist-->
@@ -114,7 +117,7 @@
         <section class="mt-4">
             <h1 class="is-size-3">Add Track</h1>
             <div class="entity-div">
-            <form>
+            <form method="POST" action="/add-track">
                 <div class="field">
                     <label class="label" for="track-name">Track</label>
                     <div class="control">

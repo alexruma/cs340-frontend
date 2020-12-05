@@ -316,6 +316,12 @@ def admin_add_album():
     
     return redirect("/admin/add")
 
+# Add Genre to the DB
+@app.route("/add-genre", methods=["POST"])
+def admin_add_genre():
+    genre_name = request.form["genre-name"]
+    insert_data("Genres", ["GenreName"], (genre_name,))
+    return redirect("/admin/add")
 
 # Add artist to DB.
 @app.route("/add-artist", methods = ["POST"])
@@ -544,11 +550,23 @@ def createOrder():
     if not "logged_in" in session or not session["logged_in"]:
         return jsonify({ "status": "fail"})
     
+    # get data from request and session 
     user_id = session["user_id"]
     data = request.get_json()
     albums = data["albums"]
-    status = create_order(user_id, albums)
-    return jsonify({ "status": status })
+
+    # create a new order, than create a new entry for order_albums for each album 
+    try:
+        orderID = insert_data("Orders", ["Customer"], (user_id,))
+        
+        for album in albums:
+            insert_data("Order_Albums", ["OrderID", "AlbumID"], (orderID, album))
+
+    except Exception as e:
+        print(e)
+        return jsonify({ "status": "fail" })
+
+    return jsonify({ "status": "success" })
 
 
 if __name__ == "__main__":

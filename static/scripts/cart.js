@@ -58,16 +58,22 @@ document.addEventListener('DOMContentLoaded', () => {
             buyButton.addEventListener("click", async () => {
                 const albums = JSON.parse(cart).map(album => album.albumId)
                 try {
+                    // send request to api 
                     const body = JSON.stringify({albums});
                     const headers = new Headers();
                     headers.append("Content-Type", "application/json");
                     const request = await fetch("/api/createOrder", { method: "POST", headers, body });
                     const data = await request.json();
+
+                    // if the user isnt logged in send them to login
                     if (data.status === "fail") {
                         window.location.href = "/login";
+                    
+                    // if the order is placed, clear the cart, let the user know the order was placed, refresh page 
                     } else {
                         alert("order placed!");
                         localStorage.setItem("cart", JSON.stringify([]));
+                        window.location.reload();
                     }
                 } catch (e) {
                     console.error("error occurred!", e);

@@ -400,7 +400,4 @@ def update(tableName, fields, values, rowID):
     except Exception as e:
         print(e)
         return "fail"
-    
-
-
 

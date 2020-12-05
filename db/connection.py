@@ -74,14 +74,32 @@ def execute_non_select_query(connection, query, params=()):
 
 
 def insert_data(table, columns, values):
+    """
+    inserts data into table using a list of columns and a list of values 
+    returns the id of that row 
+    """
     connection = connect()
     cursor = connection.cursor()
+
+    if len(values) == 1:
+        values = f'("{str(values[0])}")'
+
+    # create query     
     columns = ", ".join(columns)
     query = f"Insert into {table} (" + columns + f") values {values}"
+
+    print(query) 
+
+    # execute and commit 
     cursor.execute(query)
     connection.commit()
+    id = cursor.lastrowid
+
+    # close 
     cursor.close() 
     connection.close()
+
+    return id 
 
 def update_data(model, columns, values, row):
     if len(columns) != len(values):
