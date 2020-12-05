@@ -263,6 +263,14 @@ def display_all_album_genres():
     return render_template('admin/search-template-results.html', album_genres_data =  album_genres_data)
 
 
+    # Admin display all Artist_Genres
+@app.route("/admin-artist_genres-display-all", methods=["GET", "POST"])
+def display_all_artist_genres():
+    artist_genres_data = get_all_artist_genres()
+
+    return render_template('admin/search-template-results.html', artist_genres_data =  artist_genres_data)
+
+
 ##ADMIN ADD PAGE ROUTING
 
 # Add album to DB.
@@ -411,6 +419,7 @@ def admin_delete_album_artists():
     flash('Row ' + str(row_id) + ' Removed From Database')
     return redirect("/admin-album_artist-display-all")
 
+
 # Delete Album_Genres.
 @app.route("/delete-album-genres", methods=["GET", "POST"])
 def admin_delete_album_genres():
@@ -420,6 +429,17 @@ def admin_delete_album_genres():
     
     flash('Row ' + str(row_id) + ' Removed From Database')
     return redirect("/admin-album_genres-display-all")
+
+
+# Delete Artist_Genres.
+@app.route("/delete-artist-genres", methods=["GET", "POST"])
+def admin_delete_artist_genres():
+    row_id = request.form['delete-id']
+
+    delete_artist_genres_by_id(row_id)
+    
+    flash('Row ' + str(row_id) + ' Removed From Database')
+    return redirect("/admin-artist_genres-display-all")
 
 
 @app.route("/login", methods=["GET", "POST"])

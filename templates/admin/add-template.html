@@ -111,7 +111,7 @@
                 <button class="button is-primary">Add Artist</button>
             </form>
         </section>
-        </div>
+       
 
         <!-- Add track-->
         <section class="mt-4">
@@ -144,6 +144,102 @@
             </form>
             </div>
         </section>
-        
+
+        <section class="mt-4">
+            <h1 class="is-size-3">Add Artist_Genres</h1>
+            <div class="entity-div">
+                <form method="POST" action="add-m-m">
+                    <input type="hidden" name="table" value="artist_genres">
+                    <label class="label" for="id-1">Artist Name</label>
+                    <select name="id-1">
+                        {% for artist in artists %}
+                        <option value="{{artist[0]}}">{{artist[1]}}</option>    
+                        {% endfor %}
+                    </select>
+                    <label class="label" for="id-2">Genre Name</label>
+                    <select name="id-2">
+                        {% for genre in genres %}
+                        <option value="{{genre[0]}}">{{genre[1]}}</option>    
+                        {% endfor %}
+                    </select>
+                    <br>
+                    <input class="button is-primary" type="submit" value="Add">
+                    
+                </form>
+            </div>
+        </section>
+
+        <section class="mt-4">
+            <h1 class="is-size-3">Add Artist_Genres</h1>
+            <div class="entity-div">
+                <form method="POST" action="add-m-m">
+                    <input type="hidden" name="table" value="album_genres">
+                    <label class="label" for="id-1">Artist Name</label>
+                    <select name="id-1">
+                        {% for artist in artists %}
+                        <option value="{{artist[0]}}">{{artist[1]}}</option>    
+                        {% endfor %}
+                    </select>
+                    <label class="label" for="id-2">Genre Name</label>
+                    <select name="id-2">
+                        {% for genre in genres %}
+                        <option value="{{genre[0]}}">{{genre[1]}}</option>    
+                        {% endfor %}
+                    </select>
+                    <br>
+                    <input class="button is-primary" type="submit" value="Add">
+                    
+                </form>
+            </div>
+        </section>
+
+        <section class="mt-4">
+            <h1 class="is-size-3">Add Album_Genres</h1>
+            <div class="entity-div">
+                <form method="POST" action="add-m-m">
+                    <input type="hidden" name="table" value="album_artists">
+                    <label class="label" for="id-1">Album Name</label>
+                    <select name="id-1">
+                        {% for album in albums %}
+                        <option value="{{album[0]}}">{{album[1]}}</option>    
+                        {% endfor %}
+                    </select>
+                    <label class="label" for="id-1">Artist Name</label>
+                    <select name="id-1">
+                        {% for artist in artists %}
+                        <option value="{{artist[0]}}">{{artist[1]}}</option>    
+                        {% endfor %}
+                    </select>
+                    <br>
+                    <input class="button is-primary" type="submit" value="Add">
+                    
+                </form>
+            </div>
+        </section>
+
+        <section class="mt-4">
+            <h1 class="is-size-3">Add Album_Artists</h1>
+            <div class="entity-div">
+                <form method="POST" action="add-m-m">
+                    <input type="hidden" name="table" value="artist_genre">
+                    <label class="label" for="id-1">Album Name</label>
+                    <select name="id-1">
+                        {% for album in albums %}
+                        <option value="{{album[0]}}">{{album[1]}}</option>    
+                        {% endfor %}
+                    </select>
+                    <label class="label" for="id-2">Genre Name</label>
+                    <select name="id-2">
+                        {% for genre in genres %}
+                        <option value="{{genre[0]}}">{{genre[1]}}</option>    
+                        {% endfor %}
+                    </select>
+                    <br>
+                    <input class="button is-primary" type="submit" value="Add">
+                    
+                </form>
+            </div>
+        </section>
+    </div>
     </div>
 </div>
