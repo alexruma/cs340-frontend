@@ -7,12 +7,15 @@
     border: 1px solid black;
     box-shadow: 1px 2px 1px black;
     margin: 10px;
+    overflow: hidden;
 }
 
 #album-thubmnail p {
     max-width: 50px;
     text-overflow: ellipsis;
-    overflow: hidden;
+    color: black;
+    text-decoration: none;
+    text-transform: capitalize;
 }
 
 .message-text{

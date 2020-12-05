@@ -2,22 +2,19 @@
 {% block styles %}
 <link rel="stylesheet" href={{ url_for("static", filename="styles/cart.css") }} />
 {% endblock %}
+{% block scripts %}
+<script src={{ url_for("static", filename="scripts/cart.js")}}></script>
+{% endblock %}
 {% block title %}My Cart{% endblock %}
 {% block content %}
        <div class="main-div">
-        <div >
+        <div id="container">
             <h1 id ="headline">My Cart</h1>
-            <ul>
-                <li class="columns">
-                <span class= "cart-item column is-one third">Cart item</span> <span class="cart-item-price column is-one third">$12.99</span> <button class = "button remove-button  column is-one third">Remove</button> 
-            </li>
-            <li class ="columns">
-                <span class= "cart-item column is-one third">Cart item number </span> <span class="cart-item-price column is-one third">$9.99</span><button class = "button remove-button column is-one third">Remove</button> 
-            </li>
-            </ul>
-            <div id = "cart-total">$22.98</div>
+            <h2 class="is-hidden">You're cart is empty</h2>
+            <div id="albums-container">
+               
+            </div>
         </div>
-        <div id = "buy-div"><button class="button buy-btn">Buy</button></div>
         <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
         </div>    
     </div>

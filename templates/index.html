@@ -1,5 +1,8 @@
 {% extends "layout/layout_template.html" %}
 {% block title %}Record Store {% endblock %}
+{% block scripts %}
+ <script src={{ url_for("static", filename="scripts/main.js") }}></script>
+{% endblock %}
 {% block content %}
         <!-- NEW RELEASES  -->
         <section class="section">
@@ -55,10 +58,12 @@
                 <div id="albums" class="columns is-flex-wrap-wrap albums">
                     {% if context %}
                         {% for album in context["albums"] %}
-                            <div id="album-thumbnail" class="column is-one-fifth has-text-centered is-vcentered">
-                                <img class="mt-1" src="static/images/{{album[1]}}.jpg" alt="album artwork for {{ album[1]}}"/>
-                                <p>{{ album[1]}}</p>
-                            </div>
+                            <a href="/album/{{album[0]}}">
+                                <div id="album-thumbnail" class="column is-one-fifth has-text-centered is-vcentered">
+                                    <img class="mt-1" src="static/images/{{album[1]}}.jpg" alt="album artwork for {{ album[1]}}"/>
+                                    <p>{{ album[1]}}</p>
+                                </div>
+                            </a>
                         {% endfor %}
                     {% endif %}
                 </div>

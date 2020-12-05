@@ -27,11 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const genreLinks = document.querySelectorAll(".genre-link");
     const albumsContainer = document.querySelector("#albums");
 
-    const createAlbumImage = (albumName) => {
+    const createAlbumImage = (albumName, albumID) => {
       // return a node <div><img><p></div>
       // put album img src into image and title into p
 
+      const link = document.createElement("a");
+      link.href = `/album/${albumID}`
       const div = document.createElement("div");
+      link.appendChild(div)
       div.id = "album-thumbnail";
       div.className = "column is-one-fifth has-text-centered is-vcentered";
       const img = document.createElement("img");
@@ -41,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
       p.textContent = albumName;
       div.appendChild(img);
       div.appendChild(p);
-      return div 
+      return link
     }
 
     const updateAlbums = async (search, api) => {
@@ -52,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const response = await fetch(api, { method: "POST", body, headers })
         const data = await response.json();
         
-        const nodes = data.map(album => createAlbumImage(album[1]));
+        const nodes = data.map(album => createAlbumImage(album[1], album[0]));
         
         // remove old albums 
         while (albumsContainer.firstChild) {
