@@ -55,9 +55,23 @@ document.addEventListener('DOMContentLoaded', () => {
             buyButton.className = "button buy-btn";
             container.appendChild(buyButton);
 
-            buyButton.addEventListener("click", () => {
-                // create order on server, clear cart, notify user
-                alert("Order created!");
+            buyButton.addEventListener("click", async () => {
+                const albums = JSON.parse(cart).map(album => album.albumId)
+                try {
+                    const body = JSON.stringify({albums});
+                    const headers = new Headers();
+                    headers.append("Content-Type", "application/json");
+                    const request = await fetch("/api/createOrder", { method: "POST", headers, body });
+                    const data = await request.json();
+                    if (data.status === "fail") {
+                        window.location.href = "/login";
+                    } else {
+                        alert("order placed!");
+                        localStorage.setItem("cart", JSON.stringify([]));
+                    }
+                } catch (e) {
+                    console.error("error occurred!", e);
+                }
             });
         }
     }

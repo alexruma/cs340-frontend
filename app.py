@@ -424,6 +424,7 @@ def login():
         if request.form["email"] == "admin":
             session["admin"] = True 
             session["logged_in"] = True
+            session["user_id"] = 1 # admin user is Alex Ruma
             return redirect("/admin/add")
         else:
             # attempt to get user from the database 
@@ -537,6 +538,18 @@ def updateGenre():
     status = update("Genres", ["genreName"], [newGenre], genreID)
     print(status)
     return jsonify(status)
+
+@app.route("/api/createOrder", methods=["POST"])
+def createOrder():
+    if not "logged_in" in session or not session["logged_in"]:
+        return jsonify({ "status": "fail"})
+    
+    user_id = session["user_id"]
+    data = request.get_json()
+    albums = data["albums"]
+    status = create_order(user_id, albums)
+    return jsonify({ "status": status })
+
 
 if __name__ == "__main__":
     app.run(debug=True)
