@@ -4,16 +4,17 @@
 {% endblock %}
 {% block title %}Album Name{% endblock %}
 {% block content %}
+ 
     <div class = "details-main-div columns">
         <div class="is-one-half">
             <h1 class="is-size-1" id="album-header">Album Details</h1>
             <h2 ><span class="has-text-weight-bold">Album ID: </span> {{ context["data"][0]}}</h2>
             <h2 ><span class="has-text-weight-bold">Album: </span> {{ context["data"][1]}}</h2>
             <h3 ><span class="has-text-weight-bold">Artist: </span> {{ context["data"][3]}}</h3>
-            <h3 ><span class="has-text-weight-bold">Price: </span> {{ context["data"][2]}}</h3>
+            <h3 ><span class="has-text-weight-bold">Price: </span> ${{ context["data"][2] / 100 }}</h3>
         </div>
-        <div class="is-one-half ml-5">
-            <img src="{{ url_for("static", filename="images/")}}{{context["data"][1]}}.jpg" />
+        <div class="is-one-half ml-5 mt-5">
+            <img id="album-art" src="{{ url_for("static", filename="images/")}}{{context["data"][1]}}.jpg" />
         </div>
     </div>
     <div>
@@ -28,22 +29,18 @@
                 </tr>
             </thead>
             <tbody>
+            {% for track in context["tracks"] %}
                 <tr>
-                    <td>1</td>
-                    <td>Song 1</td>
-                    <td>3:12</td>
-                    <td>&starf; &starf; &starf; &starf;</td>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ track[1] }}</td>
+                    <td>{{ (track[2] // 60)|string + ":" + (track[2] % 60)|string }}</td>
+                    <td>{% for x in range([1,2,3,4,5]|random()) %}&starf;{% endfor %}</td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Song 2</td>
-                    <td>2:31</td>
-                    <td>&starf; &starf; &starf; </td>
-                </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>
-    <div id = "album-price" class="album_detail_item">$12.99</div>
+    <div id = "album-price" class="album_detail_item">${{ context["data"][2] / 100 }}</div>
     <button data-album-id={{context["data"][0]}} data-album-name="{{context["data"][1]}}"
         data-album-price={{context["data"][2]}} class="button is-primary cart-btn mt-3">Add to Cart</button> 
 </div>
