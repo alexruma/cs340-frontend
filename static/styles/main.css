@@ -40,6 +40,13 @@
     font-size: small;
 }
 
+.artist-table{
+    margin-top: 1%;;
+    border: solid gray;
+    width: 45%;
+    font-size: small;
+}
+
 td{
     margin-right: 1.3%;
     padding: 1%;

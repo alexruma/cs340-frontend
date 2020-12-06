@@ -132,14 +132,19 @@
 <div>
     <div class="is-one-half">
         {% for artist in artist_data %}
-        <h4 id="album-header">Artist Details</h4>
-            <h4 ><span class="has-text-weight-bold">Artist ID: </span> {{ artist[1] }}</h4>
-            <h4 ><span class="has-text-weight-bold">Artist: </span> {{ artist[0] }}</h4>
-            <h4 ><span class="has-text-weight-bold">Genre </span> {{ artist[2] }}</h4>
-            <form action = "/delete-artist"  method="POST">
-                <input class="input" type="hidden" name="delete-id" value = "{{ artist[1] }}"> 
-                <input class="button" type="submit" value ="Delete Artist">
-                </form>
+        <h4 id="album-header">{{ artist[0] }}</h4>
+        <table class="artist-table">
+            <tr>
+                <th>Artist ID</th>
+                <th>Artist</th>
+                <th>Genre</th>
+            </tr>
+            <tr>
+                <td>{{ artist[1] }}</td>
+                <td>{{ artist[0] }}</td>
+                <td>{{ artist[2] }}</td>
+            </tr>
+        </table>
             <br>
         {% endfor %}
     </div>
