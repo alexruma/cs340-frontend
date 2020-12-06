@@ -62,12 +62,12 @@ def render_account():
     user = execute_query(connection, query)
     firstName, lastName, email, favGenre = user[0]
   
-    query = f"""SELECT Orders.OrderID, Customers.FirstName, SUM(Albums.Price)
-                FROM Customers INNER JOIN Orders ON Customers.CustomerID = Orders.CustomerID
-                INNER JOIN Order_Albums ON Orders.OrderID = Order_Albums.OrderID 
-                INNER JOIN Albums ON Order_Albums.AlbumID = Albums.AlbumID 
-                WHERE Customers.CustomerID = {user_id} GROUP BY OrderID;"""
-    orders = execute_query(connection, query)
+    # query = f"""SELECT Orders.OrderID, Customers.FirstName, SUM(Albums.Price)
+    #             FROM Customers INNER JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+    #             INNER JOIN Order_Albums ON Orders.OrderID = Order_Albums.OrderID 
+    #             INNER JOIN Albums ON Order_Albums.AlbumID = Albums.AlbumID 
+    #             WHERE Customers.CustomerID = {user_id} GROUP BY OrderID;"""
+    # orders = execute_query(connection, query)
     connection.close() 
 
     return render_template('account-template.html', context={ 
@@ -75,7 +75,7 @@ def render_account():
         "lastName": lastName,
         "email": email,
         "favGenre": favGenre,
-        "orders": orders 
+        #"orders": orders 
     })
 
 @app.route('/album/<int:id>', methods=["GET"])

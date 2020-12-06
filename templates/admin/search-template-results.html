@@ -81,8 +81,26 @@
 <div>
     <div class="is-one-half">
         {% for album in album_data %}
-        <h4 id="album-header">Album Details</h4>
-            <h4 ><span class="has-text-weight-bold">Album ID: </span> {{ album[0] }}</h4>
+        <h4 id="album-header">{{ album[1] }}</h4>
+        <table class="album-table">
+            <tr>
+                <th>Album ID</th>
+                <th>Album Name</th>
+                <th>Artist</th>
+                <th>Price</th>
+                <th>Release Year</th>
+                <th>Copies in Stock</th>
+            </tr>
+            <tr>
+                <td>{{ album[0] }}</td>
+                <td>{{ album[1] }}</td>
+                <td>{{ album[3] }}</td>
+                <td>{{ album[2] / 100 }} </td>
+                <td>{{ album[5] }}</td>
+                <td>{{ album[4] }}</td>
+            </tr>
+        </table>
+            <!-- <h4 ><span class="has-text-weight-bold">Album ID: </span> {{ album[0] }}</h4>
             <h4 ><span class="has-text-weight-bold">Album: </span> {{ album[1] }}</h4>
             <h4 ><span class="has-text-weight-bold">Artist: </span> {{ album[3] }}</h4>
             <h4 ><span class="has-text-weight-bold">Price: </span> ${{ album[2] / 100 }}</h4>
@@ -94,8 +112,8 @@
                 </form>
                 <table>
                     <caption>{{ album[1] }}</caption>
-                </table>
-            <br>
+                </table>-->
+            <br> 
         {% endfor %}
             </div>
   
@@ -139,7 +157,8 @@
     <!-- Album_Artists Results Display-->
 <div>
     <div class="is-one-half">
-        <table>
+        <table class="m-m-table"> 
+            <table >
             <tr>
                 <th>Row ID</th>
                 <th>Album ID</th>
@@ -174,7 +193,7 @@
   <!-- Album_Genres Results Display-->
   <div>
     <div class="is-one-half">
-        <table>
+        <table class="m-m-table">
             <tr>
                 <th>Row ID</th>
                 <th>Album ID</th>
@@ -209,7 +228,7 @@
      <!-- Artist_Genres Results Display-->
   <div>
     <div class="is-one-half">
-        <table>
+        <table class="m-m-table"> 
             <tr>
                 <th>Row ID</th>
                 <th>Artist ID</th>
