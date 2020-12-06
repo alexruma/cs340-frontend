@@ -88,7 +88,7 @@ def render_album(id):
     WHERE Albums.AlbumID = {id}
     """
     album_data = execute_query(connection, query)
-
+  
     # return a 404 if an album wasn't found 
     if not album_data:
         return render_template("404-template.html")
@@ -489,7 +489,7 @@ def getAlbums():
                 INNER JOIN Albums ON Album_Genres.AlbumID = Albums.AlbumID
                 INNER JOIN Album_Artists ON Albums.AlbumID = Album_Artists.AlbumID
                 INNER JOIN Artists ON Album_Artists.ArtistID = Artists.ArtistID
-                WHERE Genres.GenreID = {genreID}"""
+                WHERE Genres.GenreID = {genreID} GROUP BY Albums.AlbumID"""
     albums = execute_query(connection, albums_query)
  
     connection.close()
@@ -509,7 +509,7 @@ def searchAlbums():
                 INNER JOIN Album_Artists ON Albums.AlbumID = Album_Artists.AlbumID
                 INNER JOIN Artists ON Album_Artists.ArtistID = Artists.ArtistID
                 WHERE Genres.GenreName LIKE '%{search}%' OR Artists.ArtistName LIKE '%{search}%'
-                OR Albums.AlbumName LIKE '%{search}%'"""
+                OR Albums.AlbumName LIKE '%{search}%' GROUP BY Albums.AlbumID"""
     albums = execute_query(connection, albums_query)
  
     connection.close()

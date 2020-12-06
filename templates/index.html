@@ -8,23 +8,23 @@
         <section class="section">
             <h1 class="is-size-1 mb-4">New Releases</h1>
             <div class="columns">
-                <div>
-                <a href="album/42" >
-                    <img src={{ url_for("static", filename="images/album1.png")}} />
-                    <h2> positions </h2>
-                </a>
-                    <h3>Ariana Grande</h3>
+                <div class="column is-one-third has-text-centered">
+                    <a href="album/42" >
+                        <img src={{ url_for("static", filename="images/positions.jpg")}} />
+                        <h2> positions </h2>
+                    </a>
+                        <h3>Ariana Grande</h3>
                 </div>
                 <div class="column is-one-third has-text-centered">
                     <a href="album/43">
-                        <img src={{ url_for("static", filename="images/album2.png")}} />
+                        <img src={{ url_for("static", filename="images/featuring ty dolla sign.jpg")}} />
                         <h2>Featuring Ty Dolla...</h2>
                     </a>
                     <h3>Ty Dolla $ign</h3>
                 </div>
                 <div class="column is-one-third has-text-centered">
                     <a href="album/44">
-                        <img src={{ url_for("static", filename="images/album3.png")}} />
+                        <img src={{ url_for("static", filename="images/music is the weapon.jpg")}} />
                         <h3>Music is The Weapon</h3>
                     </a>
                     <h3>Major Lazor</h3>
@@ -64,7 +64,7 @@
                         {% for album in context["albums"] %}
                             <a href="/album/{{album[0]}}">
                                 <div id="album-thumbnail" class="column is-one-fifth has-text-centered is-vcentered">
-                                    <img class="mt-1" src="static/images/{{album[1]}}.jpg" alt="album artwork for {{ album[1]}}"/>
+                                    <img id="image-thumbnail" class="mt-1" src="static/images/{{album[1]}}.jpg"/>
                                     <p>{{ album[1]}}</p>
                                 </div>
                             </a>

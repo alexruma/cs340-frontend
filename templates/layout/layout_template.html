@@ -9,9 +9,10 @@
     {% block scripts %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
 </head>
-<body>
+<body> 
+    {% include "layout/nav.html" %}
     <div class="container is-size-4">
-        {% include "layout/nav.html" %}
+       
         
         <!-- Header/navbar section end-->
         {% block content %}
