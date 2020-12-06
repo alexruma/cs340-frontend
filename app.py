@@ -353,6 +353,25 @@ def admin_add_track():
     return redirect("/admin/add")
 
 
+# Handle initial routing for all M:M adds.
+@app.route("/add-m-m", methods = ["POST"])
+def add_m_m():
+  
+    table_name = request.form["table"]
+    id_1 = request.form["id-1"]
+    id_2 = request.form["id-2"]
+
+    # Call add method based on which table requested.
+    if table_name == "album_artists":
+        add_album_artists(id_1, id_2)
+    if table_name == "album_genres":
+        add_album_genres(id_1, id_2)
+    if table_name == "artist_genres":
+        add_artist_genres(id_1, id_2)
+    
+    return redirect("/admin/add")
+
+
 @app.route("/create-account", methods=["GET", "POST"])
 def render_create_account():
     if request.method == "POST":
@@ -440,6 +459,7 @@ def admin_delete_artist_genres():
     
     flash('Row ' + str(row_id) + ' Removed From Database')
     return redirect("/admin-artist_genres-display-all")
+
 
 
 @app.route("/login", methods=["GET", "POST"])

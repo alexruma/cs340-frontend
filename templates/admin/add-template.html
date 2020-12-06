@@ -148,7 +148,7 @@
         <section class="mt-4">
             <h1 class="is-size-3">Add Artist_Genres</h1>
             <div class="entity-div">
-                <form method="POST" action="add-m-m">
+                <form method="POST" action="/add-m-m">
                     <input type="hidden" name="table" value="artist_genres">
                     <label class="label" for="id-1">Artist Name</label>
                     <select name="id-1">
@@ -172,8 +172,8 @@
         <section class="mt-4">
             <h1 class="is-size-3">Add Artist_Genres</h1>
             <div class="entity-div">
-                <form method="POST" action="add-m-m">
-                    <input type="hidden" name="table" value="album_genres">
+                <form method="POST" action="/add-m-m">
+                    <input type="hidden" name="table" value="artist_genres">
                     <label class="label" for="id-1">Artist Name</label>
                     <select name="id-1">
                         {% for artist in artists %}
@@ -196,7 +196,7 @@
         <section class="mt-4">
             <h1 class="is-size-3">Add Album_Genres</h1>
             <div class="entity-div">
-                <form method="POST" action="add-m-m">
+                <form method="POST" action="/add-m-m">
                     <input type="hidden" name="table" value="album_artists">
                     <label class="label" for="id-1">Album Name</label>
                     <select name="id-1">
@@ -204,10 +204,10 @@
                         <option value="{{album[0]}}">{{album[1]}}</option>    
                         {% endfor %}
                     </select>
-                    <label class="label" for="id-1">Artist Name</label>
-                    <select name="id-1">
-                        {% for artist in artists %}
-                        <option value="{{artist[0]}}">{{artist[1]}}</option>    
+                    <label class="label" for="id-1">Genre Name</label>
+                    <select name="id-2">
+                        {% for genre in genres %}
+                        <option value="{{genre[0]}}">{{genre[1]}}</option>    
                         {% endfor %}
                     </select>
                     <br>
@@ -228,10 +228,10 @@
                         <option value="{{album[0]}}">{{album[1]}}</option>    
                         {% endfor %}
                     </select>
-                    <label class="label" for="id-2">Genre Name</label>
-                    <select name="id-2">
-                        {% for genre in genres %}
-                        <option value="{{genre[0]}}">{{genre[1]}}</option>    
+                    <label class="label" for="id-2">Artist Name</label>
+                    <select name="id-1">
+                        {% for artist in artists %}
+                        <option value="{{artist[0]}}">{{artist[1]}}</option>    
                         {% endfor %}
                     </select>
                     <br>

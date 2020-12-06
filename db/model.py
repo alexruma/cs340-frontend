@@ -103,7 +103,7 @@ def add_artist_genres(artist_id, genre_id):
 
     # Execute query and get int value of ID.
     execute_non_select_query(connection, query)
-    
+
     connection.close()
 
 def add_album_genres(album_id, genre_id):
@@ -287,6 +287,18 @@ def get_album_from_id_or_name(id=None,name=None):
         album_info = execute_query(connection, query)
     except Exception:
         album_info = ()
+    
+    #Get track info.
+    if album_info != []:
+        album_id = album_info[0][0]
+
+        track_query = f"""SELECT Tracks.TrackName, Tracks.TrackLength FROM Tracks WHERE Tracks.AlbumID = {album_id}"""
+    
+        try:
+            tracks = execute_query(connection, track_query)
+        except Exception:
+            tracks = ()
+        print(tracks)
     
     connection.close()
     
