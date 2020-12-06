@@ -62,12 +62,12 @@ def render_account():
     user = execute_query(connection, query)
     firstName, lastName, email, favGenre = user[0]
   
-    query = f"""SELECT Orders.OrderID, Customers.FirstName, SUM(Albums.Price)
-                FROM Customers INNER JOIN Orders ON Customers.CustomerID = Orders.CustomerID
-                INNER JOIN Order_Albums ON Orders.OrderID = Order_Albums.OrderID 
-                INNER JOIN Albums ON Order_Albums.AlbumID = Albums.AlbumID 
-                WHERE Customers.CustomerID = {user_id} GROUP BY OrderID;"""
-    orders = execute_query(connection, query)
+    # query = f"""SELECT Orders.OrderID, Customers.FirstName, SUM(Albums.Price)
+    #             FROM Customers INNER JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+    #             INNER JOIN Order_Albums ON Orders.OrderID = Order_Albums.OrderID 
+    #             INNER JOIN Albums ON Order_Albums.AlbumID = Albums.AlbumID 
+    #             WHERE Customers.CustomerID = {user_id} GROUP BY OrderID;"""
+    # orders = execute_query(connection, query)
     connection.close() 
 
     return render_template('account-template.html', context={ 
@@ -75,7 +75,7 @@ def render_account():
         "lastName": lastName,
         "email": email,
         "favGenre": favGenre,
-        "orders": orders 
+        #"orders": orders 
     })
 
 @app.route('/album/<int:id>', methods=["GET"])
@@ -263,6 +263,14 @@ def display_all_album_genres():
     return render_template('admin/search-template-results.html', album_genres_data =  album_genres_data)
 
 
+    # Admin display all Artist_Genres
+@app.route("/admin-artist_genres-display-all", methods=["GET", "POST"])
+def display_all_artist_genres():
+    artist_genres_data = get_all_artist_genres()
+
+    return render_template('admin/search-template-results.html', artist_genres_data =  artist_genres_data)
+
+
 ##ADMIN ADD PAGE ROUTING
 
 # Add album to DB.
@@ -345,6 +353,25 @@ def admin_add_track():
     return redirect("/admin/add")
 
 
+# Handle initial routing for all M:M adds.
+@app.route("/add-m-m", methods = ["POST"])
+def add_m_m():
+  
+    table_name = request.form["table"]
+    id_1 = request.form["id-1"]
+    id_2 = request.form["id-2"]
+
+    # Call add method based on which table requested.
+    if table_name == "album_artists":
+        add_album_artists(id_1, id_2)
+    if table_name == "album_genres":
+        add_album_genres(id_1, id_2)
+    if table_name == "artist_genres":
+        add_artist_genres(id_1, id_2)
+    
+    return redirect("/admin/add")
+
+
 @app.route("/create-account", methods=["GET", "POST"])
 def render_create_account():
     if request.method == "POST":
@@ -411,6 +438,7 @@ def admin_delete_album_artists():
     flash('Row ' + str(row_id) + ' Removed From Database')
     return redirect("/admin-album_artist-display-all")
 
+
 # Delete Album_Genres.
 @app.route("/delete-album-genres", methods=["GET", "POST"])
 def admin_delete_album_genres():
@@ -420,6 +448,18 @@ def admin_delete_album_genres():
     
     flash('Row ' + str(row_id) + ' Removed From Database')
     return redirect("/admin-album_genres-display-all")
+
+
+# Delete Artist_Genres.
+@app.route("/delete-artist-genres", methods=["GET", "POST"])
+def admin_delete_artist_genres():
+    row_id = request.form['delete-id']
+
+    delete_artist_genres_by_id(row_id)
+    
+    flash('Row ' + str(row_id) + ' Removed From Database')
+    return redirect("/admin-artist_genres-display-all")
+
 
 
 @app.route("/login", methods=["GET", "POST"])

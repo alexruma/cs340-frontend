@@ -92,6 +92,7 @@
         </form>
     </section>
 </div>
+
 <div class="columns">
     <section class="column is-half">
         <p id="search-artist-error" class="has-text-danger"></p>
@@ -106,7 +107,11 @@
                 <label class="label" for="artist_name">Name: </label>
                 <input class="is-hidden" type="text" name="update-artist-id" id="update-artist-id" />
                 <div class="control">
-                    <input class="input" type="text" id="update-artist-artist-name" name="artist_name" placeholder="artist name" />
+                    <input class="input" type="text" id="update-artist-artist-name" name="artist_name" list="artist-list" placeholder="artist name" />
+                    <datalist id="artist-list">
+                        {% for artist in artists %}
+                        <option value="{{artist[1]}}">{{artist[1]}}</option>    
+                        {% endfor %}
                 </div>
             </div>
             <div class="field">
@@ -124,6 +129,7 @@
             <button class="button is-primary">Update Artist</button>
         </form>
     </section>
+
     <section class="column is-half mt-4">
         <h1 class="is-size-3">Add Track</h1>
         <form>

@@ -103,7 +103,7 @@ def add_artist_genres(artist_id, genre_id):
 
     # Execute query and get int value of ID.
     execute_non_select_query(connection, query)
-    
+
     connection.close()
 
 def add_album_genres(album_id, genre_id):
@@ -288,10 +288,23 @@ def get_album_from_id_or_name(id=None,name=None):
     except Exception:
         album_info = ()
     
+    #Get track info.
+    # if album_info != []:
+    #     album_id = album_info[0][0]
+
+    #     track_query = f"""SELECT Tracks.TrackName, Tracks.TrackLength FROM Tracks WHERE Tracks.AlbumID = {album_id}"""
+    
+    #     try:
+    #         tracks = execute_query(connection, track_query)
+    #     except Exception:
+    #         tracks = ()
+    #     print(tracks)
+    
     connection.close()
     
     return album_info
 
+# M:M table SELECT Queries:
 def get_all_album_artists():
      connection = connect()
      
@@ -312,10 +325,21 @@ def get_all_album_genres():
      connection.close()
      
      return table_info
+
+
+def get_all_artist_genres():
+     connection = connect()
+     
+     query = f""" SELECT * FROM Artist_Genres"""
+     table_info = execute_query(connection, query)
+     
+     connection.close()
+     
+     return table_info
     
 
 
-# DELETE queries.
+# DELETE queries:
 
 def delete_album_by_id(id):
     """ Deletes album with specified ID from Albums table, Album_Artists table and Album_Genres table."""
@@ -363,7 +387,7 @@ def delete_artist_by_id(id):
 
     connection.close()
 
-
+# M:M table DELETE queries:
 def delete_album_artists_by_id(id):
     """ Deletes Album_Artists row with specified row ID."""
     connection = connect()
@@ -378,7 +402,17 @@ def delete_album_genres_by_id(id):
     """ Deletes Album_Genres row with specified row ID."""
     connection = connect()
     
-    query = f"""DELETE FROM Album_Artists WHERE Album_Genres.RowID = {id}"""
+    query = f"""DELETE FROM Album_Genres WHERE Album_Genres.RowID = {id}"""
+    execute_non_select_query(connection, query)
+
+    connection.close()
+
+
+def delete_artist_genres_by_id(id):
+    """ Deletes Artist_Genres row with specified row ID."""
+    connection = connect()
+    
+    query = f"""DELETE FROM Artist_Genres WHERE Artist_Genres.RowID = {id}"""
     execute_non_select_query(connection, query)
 
     connection.close()
