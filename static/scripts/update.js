@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const addArtistButton = document.querySelector("#add-artist");
     const deleteArtist = document.querySelector("#delete-artist");
     const addGenre = document.querySelector("#add-genre");
-    const addGenresContainer = document.querySelector("#add-genres");
+    const addGenresContainer = document.querySelector("#album-genres");
     const deleteGenre = document.querySelector("#delete-genre");
 
     searchAlbumForm.addEventListener("submit", async (e) => {
