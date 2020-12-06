@@ -555,10 +555,18 @@ def getAlbumDetails():
 @app.route("/api/updateAlbum", methods=["POST"])
 def updateAlbum():
     data = request.get_json() 
-    fields = ["AlbumName", "Price", "ReleasedYear", "CopiesInStock"]
-    values = [data["albumName"], data["price"], data["ReleasedYear"], data["CopiesInStock"]]
-    status = update("Albums", fields, values, data["albumID"])
-    return jsonify({ "status" : status })
+    try:
+        update_multiple(data["albumID"], data["artists"], "Album_Artists", ["AlbumID", "ArtistID"])
+        update_multiple(data["albumID"], data["genres"], "Album_Genres", ["AlbumID", "GenreID"])
+
+        fields = ["AlbumName", "Price", "ReleasedYear", "CopiesInStock"]
+        values = [data["albumName"], data["price"], data["ReleasedYear"], data["CopiesInStock"]]
+
+        status = update("Albums", fields, values, data["albumID"])
+        return jsonify({ "status" : status })
+    except Exception as e:
+        print(e)
+        return jsonify({ "status": "fail" })
 
 @app.route("/api/getArtist", methods=["POST"])
 def getArtist():
@@ -572,8 +580,14 @@ def updateArtist():
     data = request.get_json()
     artistID = data["artistID"]
     artistName = data["artistName"]
-    status = update("Artists", ["artistName"], [artistName], artistID)
-    return jsonify(status)
+
+    try:
+        update_multiple(artistID, data["genres"], "Artist_Genres", ["ArtistID", "GenreID"])
+        status = update("Artists", ["artistName"], [artistName], artistID)
+        return jsonify(status)
+    except Exception as e:
+        print(e)
+        return jsonify({ "status": "fail" })
 
 @app.route("/api/updateGenre", methods=["POST"])
 def updateGenre():

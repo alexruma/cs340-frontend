@@ -435,3 +435,15 @@ def update(tableName, fields, values, rowID):
         print(e)
         return "fail"
 
+def update_multiple(fk, values, table, parameters):
+    connection = connect()
+    query1 = f"DELETE FROM Album_Artists WHERE AlbumID = {fk}"
+    execute_non_select_query(connection, query1) 
+
+    update_values = ",".join([str((int(fk), int(valueID))) for valueID in values])
+    
+    fields = ",".join(parameters)
+    query2 = f"Insert Into {table} ({fields}) values {update_values}"
+    execute_non_select_query(connection, query2)
+    connection.close() 
+
