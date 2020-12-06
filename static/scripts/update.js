@@ -8,12 +8,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const albumID = document.querySelector("#album-id");
     const albumPrice = document.querySelector("#price");
     const albumError = document.querySelector("#album-error");
+    const addArtists = document.querySelector("#add-artists");
     const albumGenre = document.querySelector("#update-album-genre");
     const albumYear = document.querySelector("#year");
     const CopiesInStock = document.querySelector("#copies");
-    const addArtist = document.querySelector("#add-artist");
+    const addArtistButton = document.querySelector("#add-artist");
     const deleteArtist = document.querySelector("#delete-artist");
     const addGenre = document.querySelector("#add-genre");
+    const addGenresContainer = document.querySelector("#add-genres");
     const deleteGenre = document.querySelector("#delete-genre");
 
     searchAlbumForm.addEventListener("submit", async (e) => {
@@ -69,10 +71,46 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    addArtistButton.addEventListener("click", () => {
+        deleteArtist.className = "";
+        const artistNum = addArtists.children.length;
+        const newArtistSelect = artistName.cloneNode(true);
+        newArtistSelect.name = `${newArtistSelect.name}${artistNum}`;
+        newArtistSelect.id = "update-" + newArtistSelect.name;
+        addArtists.appendChild(newArtistSelect);
+    });
+
+    deleteArtist.addEventListener("click", () => {
+        addArtists.removeChild(addArtists.lastChild);
+        if (addArtists.children.length == 1) {
+            deleteArtist.className = "is-hidden";
+        }
+    });
+
+    addGenre.addEventListener("click", () => {
+        deleteGenre.className = "";
+        const genreNum = addGenresContainer.children.length;
+        const newGenreSelect = albumGenre.cloneNode(true);
+        newGenreSelect.name = `${newGenreSelect.name}${genreNum}`;
+        newGenreSelect.id = "update-album-genre-" + newGenreSelect.name;
+        addGenresContainer.appendChild(newGenreSelect);
+    });
+
+    deleteGenre.addEventListener("click", () => {
+        addGenresContainer.removeChild(addGenresContainer.lastChild);
+        if (addGenresContainer.children.length == 1) {
+            deleteGenre.className = "is-hidden";
+        }
+    })
+
     // update album 
     const updateAlbumForm = document.querySelector("#update-album");
     updateAlbumForm.addEventListener("submit", async (e) => {
         e.preventDefault();
+
+        const artists = Array.from(addArtists.children).map(x => x.value);
+        const genres = Array.from(addGenresContainer.children).map(x => x.value);
+
         const body = JSON.stringify({
             albumID: albumID.value, 
             albumName: albumName.value,
@@ -80,8 +118,11 @@ document.addEventListener("DOMContentLoaded", () => {
             artistID: artistName.value,
             genreID: albumGenre.value,
             CopiesInStock: CopiesInStock.value, 
-            ReleasedYear: albumYear.value
-        })
+            ReleasedYear: albumYear.value,
+            genres,
+            artists
+        });
+
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
         try {
@@ -107,6 +148,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const updateArtistName = document.querySelector("#update-artist-artist-name");
     const updateArtistID = document.querySelector("#update-artist-id");
 
+    const addGenreToArtist = document.querySelector("#add-genre-to-artist");
+    const removeGenreFromArtist = document.querySelector("#remove-genre-from-artist");
+    const artistGenres = document.querySelector("#artist-genres");
+
+    addGenreToArtist.addEventListener("click", () => {
+        removeGenreFromArtist.className = "";
+        const genreNum = artistGenres.children.length;
+        const newGenreSelect = artistGenres.firstElementChild.cloneNode(true);
+        newGenreSelect.name = `${artistGenres.firstElementChild.name}-${genreNum}`;
+        newGenreSelect.id = `${artistGenres.firstElementChild.id}-${genreNum}`;
+        artistGenres.appendChild(newGenreSelect);
+    });
+
+    removeGenreFromArtist.addEventListener("click", () => {
+        artistGenres.removeChild(artistGenres.lastChild);
+        if (artistGenres.children.length == 1) {
+            removeGenreFromArtist.className = "is-hidden";
+        }
+    });
+
     searchArtistForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         const headers = new Headers();
@@ -131,10 +192,14 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
+        const genres = Array.from(artistGenres.children).map(x => x.value);
+        
         const body = JSON.stringify({
             artistID: updateArtistID.value,
-            artistName: updateArtistName.value 
+            artistName: updateArtistName.value,
+            genres 
         });
+
         try {
             const request = await fetch("/api/updateArtist", { headers, body, method: "POST"});
             const status = await request.json();
@@ -158,6 +223,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const oldGenre = document.querySelector("#old-genre");
     const newGenre = document.querySelector("#new-genre");
     const genreError = document.querySelector("#genre-error");
+    
 
     updateGenreForm.addEventListener("submit", async (e) => {
         e.preventDefault();

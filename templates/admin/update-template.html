@@ -47,7 +47,7 @@
             <!-- select genre, use genre table to get id so that the value of the option is the id of the genre-->
             <div class="field">
                 <label class="genre" for="genre">Genre:</label>
-                <div class="control">
+                <div class="control" id=>
                     <select class="select" id="update-album-genre" name="update-album-genre">
                         {% for genre in genres %}
                             <option value={{ genre[0] }}>{{ genre[1] }}</option>
@@ -111,13 +111,15 @@
             </div>
             <div class="field">
                 <label class="label">Genre</label>
-                <div class="select">
-                    <select>
-                        <option value="1">Rock</option>
-                        <option value="2">Rap</option>
-                        <option value="3">Classical</option>
+                <div class="control" id="artist-genres">
+                    <select class="select" id="new-artist-genre" name="album-genre">
+                        {% for genre in genres %}
+                            <option value={{ genre[0] }}>{{ genre[1] }}</option>
+                        {% endfor %}
                     </select>
                 </div>
+                <span id="add-genre-to-artist">+</span>
+                <span id="remove-genre-from-artist" class="is-hidden">-</span>
             </div>
             <button class="button is-primary">Update Artist</button>
         </form>
