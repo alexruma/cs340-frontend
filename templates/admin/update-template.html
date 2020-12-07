@@ -47,7 +47,7 @@
             <!-- select genre, use genre table to get id so that the value of the option is the id of the genre-->
             <div class="field">
                 <label class="genre" for="genre">Genre:</label>
-                <div class="control" id=>
+                <div class="control" id="album-genres" >
                     <select class="select" id="update-album-genre" name="update-album-genre">
                         {% for genre in genres %}
                             <option value={{ genre[0] }}>{{ genre[1] }}</option>
