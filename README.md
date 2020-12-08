@@ -26,7 +26,8 @@
     Static page that describes who we are, what we do, why we do, etc 
 
 5. Admin Page 
-
+    To reach the admin page please login with username of admin (no password required)
+    
     The admin page is only viewable by select record store employees who will be able to add new albums when they are released or delete albums that they wish to remove from the record store 
 
 

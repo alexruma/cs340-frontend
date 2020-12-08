@@ -1,4 +1,4 @@
 host = 'classmysql.engr.oregonstate.edu'
-password = "Smallpaulsocks1!"
-user = "cs340_rumaa"
+password = 
+user = 
 db = "cs340_rumaa"
